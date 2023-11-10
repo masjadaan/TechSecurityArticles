@@ -17,7 +17,7 @@ ausyscall --dump
 
 As in the case of most system calls, one or more arguments are necessary. The system call number is loaded into the EAX register, while the arguments intended for the desired function are typically loaded into EBX, ECX, and EDX, following this order. In 64-bit architecture, the arguments for system call are placed in RDI, RSI, RDX, RCX, R8 and R9 in that order.
 
-### Example
+## Example
 - In this example, we will use the appropriate system calls to write a message to the standard output.
 ```asm
 ; Ubuntu 64-bit architecture
