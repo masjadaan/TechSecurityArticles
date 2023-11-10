@@ -18,7 +18,7 @@ ausyscall --dump
 As in the case of most system calls, one or more arguments are necessary. The system call number is loaded into the EAX register, while the arguments intended for the desired function are typically loaded into EBX, ECX, and EDX, following this order. In 64-bit architecture, the arguments for system call are placed in RDI, RSI, RDX, RCX, R8 and R9 in that order.
 
 ### Example
-Writing a message to standard output.
+- In this example, we will use the appropriate system calls to write a message to the standard output.
 ```asm
 ; Ubuntu 64-bit architecture
 section .data
@@ -37,7 +37,7 @@ main:
     mov rdi, 1          ; fildes -> 1 for stdout
     mov rsi, msg        ; buf -> pointer to the message
     mov rdx, 12         ; nbyte -> number of chars in the message
-    syscall             ; invoke syscall
+    syscall             ; trigger an interrupt by invoking syscall
 
     ; syscall to exit
     ; void exit(int status);
@@ -45,7 +45,7 @@ main:
 	
 	  ; One parameter passed in the register rdi
     xor rdi, rdi        ; exit code 0
-    syscall             ; invoke syscall
+    syscall             ; trigger an interrupt by invoking syscall
 ```
 
 - Compilation & Execution
@@ -55,5 +55,5 @@ gcc syscall1.o -o syscall1
 ./syscall1
 ```
 
-In 32-bit x86 systems, the instruction `int 0x80` is often used to cause interrupt
-in 64-bit systems, the replacement is syscall instruction
+### Note
+- In 32-bit x86 systems, the int 0x80 instruction is commonly employed to initiate an interrupt. In 64-bit systems, this is substituted with the syscall instruction.
