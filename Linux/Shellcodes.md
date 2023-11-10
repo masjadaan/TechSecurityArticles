@@ -1,32 +1,59 @@
 # ShellCodes
 * * *
-Shellcode is a set of machine code instructions typically written in assembly language such as x86, designed to be executed directly by a computer's processor. Assembly code's architecture-specific nature restricts its portability across different processor types. Shellcode primarily focuses on direct manipulation of processor registers, configuring them for various system calls using opcodes. Once the assembly code is crafted to execute the desired operation, it must undergo conversion into machine code while ensuring the removal of any null bytes. Eliminating null bytes is crucial because many string operations, such as strcpy(), halt when encountering them.
+Shellcode is a set of machine code instructions typically written in assembly language such as x86, designed to be executed directly by a computer's processor. Because assembly's instructions are architecture-specific that restricts the portability of shellcodes among different processors. In general, shellcode focuses on direct manipulation of processor registers, configuring them for various system calls using opcodes. Once the assembly code is crafted to execute the desired operation, then it must be converted into machine code. However, this will not be enough, removing all null bytes is crucial. The reason is that many string operations, such as strcpy(), stop when encountering null bytes.
 
-The versatility of shellcode allows it to perform a wide range of actions within the context of the compromised program. Common applications of shellcode include establishing a network shell on a listening port of a system, initiating a reverse shell connection to a remote system, and more.
+To better understand shellcodes, let's examine first System Calls (syscall)
 
-## System Calls
+## System Calls (syscall)
 
-To invoke functions for tasks like opening system ports or modifying permissions, it's essential to utilize system calls. On UNIX-based operating systems, each function is assigned a unique system call number. System calls serve as a means to manage communication with hardware and access kernel functionality that might not be present in the application's address space.
+To invoke functions for tasks like opening system ports or modifying permissions, it's essential to utilize system calls, which serve as a means to manage communication with hardware and access kernel functionality that might not be present in the application's address space. On UNIX-based operating systems, each function is assigned a unique system call number. 
 
-When a user-level program needs to access a function beyond its address space, such as setuid(), it must first determine the system call number associated with the desired function. Subsequently, it triggers an interrupt 0x80 (int 0x80). The instruction int 0x80 is an assembly instruction commonly used to invoke system calls in many UNIX-like operating systems. This interrupt serves as a signal to the operating system, informing it of an event or request.
-
-In the case of most system calls, one or more arguments are necessary. The system call number is loaded into the EAX register, while the arguments intended for the desired function are typically loaded into EBX, ECX, and EDX, following a specific order. In 64-bit architecture, the arguments for system call are placed in rdi, rsi, rdx, rcx, r8 and r9 in that order.
-
-A comprehensive list of system call numbers can be found in:
+For instacne, when a user-level program needs to access a function beyond its address space, such as setuid(), it must first determine the system call number associated with setuid() function. Then, it triggers an interrupt which signals to the operating system that a request needs attention. The actual numbers assigned to each system call can vary between operating systems. In Linux, for instance, syscall numbers are defined in the kernel headers. One esay way to get the system call number is to use `ausyscall` tool
 ```sh
-cat /usr/include/asm-generic/unistd.h
-# OR
-cat /usr/include/asm-i386/unistd.h
+# Ubuntu
+sudo apt install auditd
+ausyscall --dump
 ```
 
-### Example: Calling exit() function with argument 0 (exit(0))
-```
-# Find the syscall number
-cat /usr/include/asm-generic/unistd.h | grep -i exit
-	#define __NR_exit 93
-	__SYSCALL(__NR_exit, sys_exit)
+As in the case of most system calls, one or more arguments are necessary. The system call number is loaded into the EAX register, while the arguments intended for the desired function are typically loaded into EBX, ECX, and EDX, following this order. In 64-bit architecture, the arguments for system call are placed in RDI, RSI, RDX, RCX, R8 and R9 in that order.
 
-mov eax, 93 # syscall number
-mov ebx, 0  # argument
-int 0x80    # interrupt
+### Example
+Writing a message to standard output.
+```asm
+; Ubuntu 64-bit architecture
+section .data
+    msg db 'System Calls', 0
+
+section .text
+    global main
+
+main:
+    ; let's write to stdout
+    ; ssize_t write(int fildes, const void *buf, size_t nbyte);
+	  ; syscall is passed in rax register
+    mov rax, 1          ; system call number for write
+	
+	  ; Function parameters are passed in the registers rdi, rsi, and rdx, respectively.
+    mov rdi, 1          ; fildes -> 1 for stdout
+    mov rsi, msg        ; buf -> pointer to the message
+    mov rdx, 12         ; nbyte -> number of chars in the message
+    syscall             ; invoke syscall
+
+    ; syscall to exit
+    ; void exit(int status);
+    mov rax, 60         ; system call number for exit
+	
+	  ; One parameter passed in the register rdi
+    xor rdi, rdi        ; exit code 0
+    syscall             ; invoke syscall
 ```
+
+- Compilation & Execution
+```sh
+nasm -f elf64 syscall1.asm
+gcc syscall1.o -o syscall1
+./syscall1
+```
+
+In 32-bit x86 systems, the instruction `int 0x80` is often used to cause interrupt
+in 64-bit systems, the replacement is syscall instruction
