@@ -15,8 +15,8 @@ main:
 	; int execve(const char *pathname, char *const _Nullable argv[], char *const _Nullable envp[]);
 	mov rax, 0 			; clearing rax
 	push rax  			; rax was set to 0, this serves as a null terminator.
-	mov rbx, 0x68732f2f6e69622f	; placing //bin/sh into rbx
-	push rbx			; placing /bin/sh onto the stack.
+	mov rbx, 0x68732f2f6e69622f	; placing /bin//sh into rbx
+	push rbx			; placing /bin//sh onto the stack.
 	mov rdi, rsp			; rsp points to the address of /bin/sh on stack, thus we store it in rdi
 	push rax			; rax was set to 0, this serves as a null terminator.
 	push rdi			; rdi is the first argument to execve, it contains the path name '/bin/sh'.
