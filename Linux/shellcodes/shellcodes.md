@@ -17,7 +17,7 @@ To execute any functionalities like opening system ports or modifying permission
 
 For instacne, when a user-level program needs to access a function beyond its address space, such as `write()`, it must first determine the system call number associated with `write()` function. Then, it triggers an interrupt which signals to the operating system that a request needs attention. The actual numbers assigned to each system call can vary between operating systems. In Linux, syscall numbers are defined in the kernel headers. One esay way to get the system call numbers is to use `ausyscall` tool
 ```sh
-# Ubuntu
+# Ubuntu 64-bit architecture
 sudo apt install auditd
 ausyscall --dump
 ```
