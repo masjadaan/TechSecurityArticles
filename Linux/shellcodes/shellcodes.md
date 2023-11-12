@@ -132,7 +132,7 @@ sudo chmod +s syscall_shell
 Looking at the xxd output of the object file `syscall_shell.o`, it's clear that our shellcode contains a lot of null bytes, which is a problem (For demonstration purposes, I am using a complete assembly code). In many exploitation scenarios, we often rely on string manipulation functions like strcpy() or gets() to copy data into a buffer. However, when these functions encounter a null byte, they interpret it as the end of the string, leading to the failure of our shellcode execution.
 ```sh
 # dump machine code
-xxd -ps syscall2.o | head
+xxd -ps syscall_shell.o | head
 	# -ps display the machine code without any hexadecimal translation.
 ```
 
