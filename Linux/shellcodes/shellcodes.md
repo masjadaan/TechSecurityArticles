@@ -140,6 +140,7 @@ xxd -ps syscall_shell.o | head
 
 
 At this point, we're facing two issues. First, we need to eliminate the null bytes (0x00). Second, the previous code is a complete assembly code with its sections, which was meant to illustrate our concept. However, in practical terms, we only need the instructions to spawn a shell. Let's tackle these two challenges in the next steps.
+***
 
 ## Removing Null Bytes
 We're facing a challenge with null bytes in our assembly code. Take, for instance, the instruction to move 10 (0x0a) into the 64-bit register rax. This operation results in '0x000000000000000a', introducing 7 null bytes. These null bytes can cause trouble, especially in string operations and can break our shellcode.
@@ -192,6 +193,7 @@ xxd -ps syscall_shell_without_nulls | head
 Now we see that the null bytes have been successfully eliminated. Additionally, the size of the shellcode has significantly reduced to just 40 bytes.
 
 ![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/Linux/shellcodes/images/opcodes_wihout_nulls.png)
+***
 
 ## Test Shellcode
 Now that we have our machine code (opcode), which is essentially our set of instructions to spawn a shell, the next step is to test our shellcode. Fortunately, there are several C programs designed specifically for this purpose. In the code snippet below, the shellcode is casted to a function pointer. This function pointer is then invoked, executing the instructions contained within the shellcode array.
