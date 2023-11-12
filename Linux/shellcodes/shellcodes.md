@@ -73,7 +73,7 @@ As a general security best-practices, applications typically drop their privileg
 
 The following code first escalates its privileges by setting the effective user ID to zero and then spawns a shell with the newly acquired privileges using the execve system call. After compiling it, we grant ownership to the root user and enable the SetUID (SUID) permission. This configuration enables our shellcode to showcase the process of reverting ownership to the root user.
 
-The sequence 0x68732f6e69622f represents the reverse order of the hexadecimal value corresponds to the ASCII representation of the string "/bin/sh"
+The sequence 0x68732f6e69622f represents the reverse order of the hexadecimal value corresponds to the ASCII representation of the string "/bin//sh"
 
 | ASCII | character |
 | --    |  ---      |
