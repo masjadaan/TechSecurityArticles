@@ -15,7 +15,7 @@ nasm -f elf64 <fileName>.s
 
 To execute any functionalities like opening system ports or modifying permissions,the operating system uses system calls. System calls serve as a means to manage communication with hardware and access kernel functionality that might not be present in the application's address space. On UNIX-based operating systems, each function is assigned a unique system call number. 
 
-For instacne, when a user-level program needs to access a function beyond its address space, such as `write()`, it must first determine the system call number associated with `write()` function. Then, it triggers an interrupt which signals to the operating system that a request needs attention. The actual numbers assigned to each system call can vary between operating systems. In Linux, syscall numbers are defined in the kernel headers. One esay way to get the system call numbers is to use `ausyscall` tool
+For instance, when a user-level program needs to access a function beyond its address space, such as `write()`, it must first determine the system call number associated with `write()` function. Then, it triggers an interrupt which signals to the operating system that a request needs attention. The actual numbers assigned to each system call can vary between operating systems. In Linux, syscall numbers are defined in the kernel headers. One east way to get the system call numbers is to use `ausyscall` tool
 ```sh
 # Ubuntu 64-bit architecture
 sudo apt install auditd
