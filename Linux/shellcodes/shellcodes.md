@@ -61,7 +61,8 @@ nasm -f elf64 syscall1.s
 gcc syscall1.o -o syscall1
 ./syscall1
 ```
-![7d570c68c9c013d1d14c285aa729cdf5.png](:/ed548fe413d746c18b89a2f0bf4a6e4e)
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/Linux/shellcodes/images/syscall_write.png)
+
 ### Note
 - In 32-bit x86 systems, the int 0x80 instruction is commonly employed to initiate an interrupt. In 64-bit systems, this is substituted with the syscall instruction.
 * * *
@@ -126,7 +127,7 @@ sudo chmod +s syscall_shell
 # execute
 ./syscall_shell
 ```
-![79c44b5eddeb4601e16e08e902302d70.png](:/2f9681e41aa94922829471be94340c7d)
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/Linux/shellcodes/images/shell_with_nulls.png)
 
 Looking at the xxd output of the object file `syscall_shell.o`, it's clear that our shellcode contains a lot of null bytes, which is a problem (For demonstration purposes, I am using a complete assembly code). In many exploitation scenarios, we often rely on string manipulation functions like strcpy() or gets() to copy data into a buffer. However, when these functions encounter a null byte, they interpret it as the end of the string, leading to the failure of our shellcode execution.
 ```sh
@@ -134,7 +135,8 @@ Looking at the xxd output of the object file `syscall_shell.o`, it's clear that 
 xxd -ps syscall2.o | head
 	# -ps display the machine code without any hexadecimal translation.
 ```
-![9f605cdf3b91557866fe6935fdba6849.png](:/89d85edbd2654500be2b373cbe3dc742)
+
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/Linux/shellcodes/images/opcodes_with_nulls.png)
 
 
 At this point, we're facing two issues. First, we need to eliminate the null bytes (0x00). Second, the previous code is a complete assembly code with its sections, which was meant to illustrate our concept. However, in practical terms, we only need the instructions to spawn a shell. Let's tackle these two challenges in the next steps.
@@ -143,7 +145,8 @@ At this point, we're facing two issues. First, we need to eliminate the null byt
 We're facing a challenge with null bytes in our assembly code. Take, for instance, the instruction to move 10 (0x0a) into the 64-bit register rax. This operation results in '0x000000000000000a', introducing 7 null bytes. These null bytes can cause trouble, especially in string operations and can break our shellcode.
 
 To overcome this issue, we can use tricks like accessing smaller portions of a 64-bit register directly. For instance, the lower 8 bits of rax can be accessed using the register name 'al'. 
-![1b013800bb37598cfb4c79edcac27b7f.png](:/0214e936f8b54205bacd701ed316a19b)
+
+![atl text](https://github.com/masjadaan/TechSecurityArticles/blob/main/Linux/shellcodes/images/rax.png)
 
 In addition, you'll often come across the instruction `xor eax, eax` in assembly to reset a register because it doesn't mess with the EFLAGS register. XORing something with itself always gives you 0. Another way to zero out a register is by subtracting it from itself, like `sub eax, eax` for EAX. You can also move the value of an existing register that's already 0 into another register using `mov eax, ecx`. However, keep in mind that these instructions can make your shellcode larger than it needs to be (that's for another article). Let's apply these concepts to our code.
 
@@ -187,7 +190,8 @@ xxd -ps syscall_shell_without_nulls | head
 ```
 
 Now we see that the null bytes have been successfully eliminated. Additionally, the size of the shellcode has significantly reduced to just 40 bytes.
-![9f6456096c1afabcf891f3215a490ed6.png](:/8a38fc64b7b146ec8ba1a0aa54037e32)
+
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/Linux/shellcodes/images/opcodes_wihout_nulls.png)
 
 ## Test Shellcode
 Now that we have our machine code (opcode), which is essentially our set of instructions to spawn a shell, the next step is to test our shellcode. Fortunately, there are several C programs designed specifically for this purpose. In the code snippet below, the shellcode is casted to a function pointer. This function pointer is then invoked, executing the instructions contained within the shellcode array.
@@ -208,4 +212,4 @@ sudo chown root:root shellcode
 sudo chmod +s shellcode
 ./shellcode
 ```
-![044e91e6173c33557b2643fa07c4d407.png](:/be3d2728650b4eab9f7f07c840479899)
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/Linux/shellcodes/images/shell_without_nulls.png)
