@@ -15,7 +15,7 @@ nasm -f elf64 <fileName>.s
 
 To execute any functionalities like opening system ports or modifying permissions,the operating system uses system calls. System calls serve as a means to manage communication with hardware and access kernel functionality that might not be present in the application's address space. On UNIX-based operating systems, each function is assigned a unique system call number. 
 
-For instacne, when a user-level program needs to access a function beyond its address space, such as `write()`, it must first determine the system call number associated with `write()` function. Then, it triggers an interrupt which signals to the operating system that a request needs attention. The actual numbers assigned to each system call can vary between operating systems. In Linux, syscall numbers are defined in the kernel headers. One esay way to get the system call numbers is to use `ausyscall` tool
+For instance, when a user-level program needs to access a function beyond its address space, such as `write()`, it must first determine the system call number associated with `write()` function. Then, it triggers an interrupt which signals to the operating system that a request needs attention. The actual numbers assigned to each system call can vary between operating systems. In Linux, syscall numbers are defined in the kernel headers. One easy way to get the system call numbers is to use `ausyscall` tool
 ```sh
 # Ubuntu 64-bit architecture
 sudo apt install auditd
@@ -73,7 +73,7 @@ As a general security best-practices, applications typically drop their privileg
 
 The following code first escalates its privileges by setting the effective user ID to zero and then spawns a shell with the newly acquired privileges using the execve system call. After compiling it, we grant ownership to the root user and enable the SetUID (SUID) permission. This configuration enables our shellcode to showcase the process of reverting ownership to the root user.
 
-The sequence 0x68732f6e69622f represents the reverse order of the hexadecimal value corresponds to the ASCII representation of the string "/bin/sh"
+The sequence 0x68732f6e69622f represents the reverse order of the hexadecimal value corresponds to the ASCII representation of the string "/bin//sh"
 
 | ASCII | character |
 | --    |  ---      |
