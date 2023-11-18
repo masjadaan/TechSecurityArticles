@@ -9,7 +9,7 @@ Before exploring the mechanics of this process, it is essential to introduce thr
 The ELF (Executable and Linking Format) file format is used on Unix-like operating systems and it consists of:
 
 | ELF File Format |
-| --- 							|
+| --- 		|
 |Header|
 |Program Header Table|
 |Section Header Table|
@@ -52,7 +52,7 @@ Simply execute the following xxd command and grab first few lines:
 ```sh
 xxd linker | head
 ```
-![46d0b56923a8b5ca3acb3d1776f54cba.png](:/81021e51bba644bc8e8059ea142512f7)
+![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/Linux/dynamicLinker/images/ELF/xxdLinker.png)
 
 Now, let's dissect this output and unravel the meaning behind these bytes.
 | Byte | Description|
@@ -68,15 +68,15 @@ However, a simpler method to get this information is by using readelf to read th
 ```sh
 readelf -h linker
 ```
-![a9f6e151dc41bbeb79fac4ea175ddede.png](:/d8443fa2d4a44955af9a42cc3ae2f3a0)
+![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/Linux/dynamicLinker/images/ELF/readelf-h.png)
 
 
 As we mentioned before, ELF files consist of sections. Now, let's use the readelf tool to display a list of all sections, with a special focus on two sections we'll be referring to later.
 ```sh
 readelf -S linker
 ```
+![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/Linux/dynamicLinker/images/ELF/readelf-S.png)
 
-![e3602ad991c49a132614d3467ecc6504.png](:/a373f456472a47a9991dba829f0146ce)
 
 - **".plt"**
 	- Start address: `0x4003F0`
@@ -92,7 +92,7 @@ The last command we will use here is to showcase the assembly code. Since readel
 ```sh
 objdump -j .text -d -M intel linker
 ```
-![11e3a63efcae02f9c99b635c05556de9.png](:/5bed7735deb54d578c85ee06c8a6d2ad)
+![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/Linux/dynamicLinker/images/ELF/objdump-j.text.png)
 
 
 
