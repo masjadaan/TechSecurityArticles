@@ -133,14 +133,14 @@ gdb linker
 ```
 
 Look for the call to the puts function. Now, puts() is a function that prints a string to standard output (stdout), kind of like printf(), but without the format strings. This raises the question, where does this puts function come from? 
-![1949e487a1473552cf15bb411d18929b.png](:/623c52e8a27c42f69199c5b4013f61f2)
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/Linux/dynamicLinker/images/GDB/assembly/disasMain.png)
 
 To answer this question, we'll set up two breakpoints—one just before calling puts() and the other immediately after the call. This way, we can dissect the program's behavior at these critical points.
 ```sh
 (gdb) b *0x000000000040052f # before calling puts()
 (gdb) b *0x0000000000400534 # after calling puts()
 ```
-![f6d79991bde2d8e93c00f0f284b64829.png](:/d33f75bbbf614b1690da99583342023f)
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/Linux/dynamicLinker/images/GDB/assembly/breakPoints.png)
 
 
 ### <span style="color: #7f7fff">Before Calling puts()</span>
@@ -149,25 +149,25 @@ Now, simply type "run" to start the program execution. The execution will pause 
 run
 disas main
 ```
-![a40a497084b9d0366500fad7cc3abfae.png](:/2872884509c34f2c9090c1661f54fbce)
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/Linux/dynamicLinker/images/GDB/beforeCallingPuts/run.png)
 
 In the assembly code for the "main" function, we spot a call instruction at this address, directing us to address 0x400400. This address corresponds to the puts function in the Procedure Linkage Table (PLT), and interestingly, it falls within the range of the ".plt" section. Since it's a call to a function, let's inspect the first four instructions to get a closer look.
 ```sh
 (gdb) x/4i 0x400400
 ```
-![93d54993c6cc279e5ed313a4134f67e9.png](:/e65091a7c591473296ffd85f7596cd6a)
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/Linux/dynamicLinker/images/GDB/beforeCallingPuts/examin400400.png)
 
 We observe a jump to address 0x601018. This address falls within the ".got.plt" we discussed earlier. Let's take a closer look at it. Inside, we find the address 0x400406, which is an address in the PLT from our previous images.
 ```sh
 (gdb) x/4x 0x601018
 ```
-![deed0934a00e6afa5e4dac4d9c6e438f.png](:/0151ab37ce0240ff82b1f367906b6af7)
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/Linux/dynamicLinker/images/GDB/beforeCallingPuts/examin601018.png)
 
 At this stage of execution, GOT points back to an address in PLT, essentially sending the execution back to the PLT. This happens because the GOT does not yet possess the address of puts. Continuing the execution after 0x400406, we encounter a jump to 0x4003F0, which happens to be the starting address of the PLT itself. Let's display the instructions there.
 ```sh
 (gdb) x/4i 0x4003f0
 ```
-![578b2e517d6005961993379256208081.png](:/438c0636fcd3498a8117d778406e4a20)
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/Linux/dynamicLinker/images/GDB/beforeCallingPuts/examin4003f0.png)
 
 Upon inspection, we spot a push instruction followed by a jump instruction to address 0x601010, once again residing in the GOT. When we investigate this address, we uncover 0x7FFFF7DEEE40, which happens to be the address of the dynamic linker itself being invoked.
 ```sh
@@ -175,13 +175,13 @@ Upon inspection, we spot a push instruction followed by a jump instruction to ad
 
 (gdb) x/4i 0x7ffff7deee40
 ```
-![e386239d1869ca6c03841aab1e941039.png](:/724af6cab1a1474fa5de8dc6411636f4)
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/Linux/dynamicLinker/images/GDB/beforeCallingPuts/examin0x7ffff7deee40.png)
 
 We can verify that this address corresponds to the dynamic linker by executing the following command.
 ```sh
 (gdb) info symbol 0x7ffff7deee40
 ```
-![a66aa11999bfaef91d090fa20fcd9571.png](:/08f0ee8241b441248f0490211319a0e7)
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/Linux/dynamicLinker/images/GDB/beforeCallingPuts/infoSymbol.png)
 
 
 Let's summarize the entire process within this table.
@@ -200,25 +200,25 @@ Now, let's proceed with the execution by typing "next". The execution reaches th
 (gdb) next
 (gdb) disas main
 ```
-![4cee253e3f542f808d9c5dbf6b5f5656.png](:/3d51b488a8234a0683ba5cb04036fd95)
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/Linux/dynamicLinker/images/GDB/afterCallingPuts/disasMain.png)
 
  If we examine 0x601018 again, we'll find a different address, namely 0x7FFFF7A7C6A0. This indicates that the dynamic linker has successfully resolved the symbol and stored the actual address of puts() in the Global Offset Table (GOT).
 ```sh
 (gdb) x/2x 0x601018
 ```
-![0a376c70ad03bedf35ee927c5205d0b0.png](:/bcb2794b582e41f08606adf111db9dac)
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/Linux/dynamicLinker/images/GDB/afterCallingPuts/examine601018.png)
 
 The address 0x7FFFF7A7C6A0 indeed corresponds to the puts() function. To validate our findings, let's inspect its first four instructions. 
 ```sh
 (gdb) x/4i 0x7ffff7a7c6a0
 ```
-![04793c68c59d02511c50181066fbfb3d.png](:/20674052773c4da59a1bae004f7c8e52)
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/Linux/dynamicLinker/images/GDB/afterCallingPuts/examine0x7ffff7a7c6a0.png)
 
 Additionally, for confirmation, we can always use GDB's built-in functions to examine the GOT entry.
 ```sh
 (gdb) info address puts
 ```
-![6ff023c93c15c5f0f269e1c808ee54ab.png](:/5bb3ba155d924c23b227d31ace001518)
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/Linux/dynamicLinker/images/GDB/afterCallingPuts/infoAddress.png)
 
 
 At this point, the symbol has been fully resolved. Remember, this was not the case at first. The symbol existing in the GOT is not resolved until the first time it is requested. At that point, the dynamic linker resolves the symbol and writes the address into the GOT. From this point forward while this program is running, any requests to the same function have the address of the function without involving the dynamic linker. The PLT entry points into the GOT entry holding the address of the function.
