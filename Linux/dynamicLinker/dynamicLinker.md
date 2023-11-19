@@ -60,7 +60,7 @@ xxd linker | head
 ```
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/Linux/dynamicLinker/images/ELF/xxdLinker.png)
 
-Now, let's dissect this output and unravel the meaning behind these bytes.
+Now, let's dissect this output and unravel the meaning behind some of these bytes.
 | Byte | Description|
 | ---   | --- |
 |Byte 0-3: 7F45	4c46   | ELF Magic Number|
