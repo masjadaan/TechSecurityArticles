@@ -125,7 +125,7 @@ To provide a high-level overview of the process:
 ## Global Offset Table
 As we have seen, the GOT has a dedicated section called as ".got". The Global Offset Table (GOT) is a data structure used in the ELF binary file format. The GOT stores the addresses of global symbols both functions and variables after they have been resolved.
 
-During program runtime, the dynamic linker obtains the absolute addresses of these symbols and populates the Global Offset Table accordingly. Unlike the PLT, the GOT may be shared among several processes. 
+During program runtime, the dynamic linker obtains the absolute addresses of these symbols and populates the Global Offset Table accordingly.
 
 
 
