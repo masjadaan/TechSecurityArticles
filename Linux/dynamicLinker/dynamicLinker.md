@@ -227,8 +227,6 @@ Additionally, for confirmation, we can always use GDB's built-in functions to ex
 ![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/Linux/dynamicLinker/images/GDB/afterCallingPuts/infoAddress.png)
 
 
-At this point, the symbol has been fully resolved. Remember, this was not the case at first. The symbol existing in the GOT is not resolved until the first time it is requested. At that point, the dynamic linker resolves the symbol and writes the address into the GOT. From this point forward while this program is running, any requests to the same function have the address of the function without involving the dynamic linker. The PLT entry points into the GOT entry holding the address of the function.
-
 At this point, the symbol has been completely resolved. Remember, initially the symbol in the Global Offset Table (GOT) is not resolved; this only occurs upon the first request. When the symbol is first requested, the dynamic linker resolves it and writes the address into the GOT. Subsequently, during the runtime of the program, any further requests to the same function will retrieve the address directly from the GOT, bypassing the dynamic linker. The Procedure Linkage Table (PLT) entry points to the corresponding GOT entry, which now holds the resolved address of the function.
 
 Happy Learning...
