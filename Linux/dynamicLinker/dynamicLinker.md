@@ -81,7 +81,7 @@ As we mentioned before, ELF files consist of sections. Now, let's use the readel
 ```sh
 readelf -S linker
 ```
-![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/Linux/dynamicLinker/images/ELF/readelf-S.png)
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/Linux/dynamicLinker/images/ELF/readelf-S.png)
 
 
 - **".plt"**
