@@ -21,7 +21,13 @@ The ELF (Executable and Linking Format) file format is used on Unix-like operati
 
 We won't dive too deep into the details of the ELF file format, but it's important to understand that the header contains information like the Magic Number and Endianness (whether it's Little or Big). Typically, the header is 52 bytes for ELF files on 32-bit systems and 64 bytes for ELF files on 64-bit systems.
 
-Now, let's talk about the sections within an ELF file. These include the .text section (which holds executable code), .data (for initialized data), .bss (uninitialized data), .rodata (read-only data), .plt (Procedure Linkage Table), and .got (Global Offset Table).
+Now, let's talk about the sections within an ELF file. These include:
+- The .text section (which holds executable code)
+- The .data (for initialized data)
+- The .bss (uninitialized data)
+- The .rodata (read-only data)
+- The .plt (Procedure Linkage Table)
+- The .got (Global Offset Table).
 
 To make things more tangible, let's create our own ELF file for the demonstrations in this article. We'll name it "linker," and we'll use the C programming language to put together a simple program.
 
