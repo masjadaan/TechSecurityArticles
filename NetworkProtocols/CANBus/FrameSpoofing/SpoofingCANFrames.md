@@ -32,10 +32,6 @@ Our objective in the spoofing attack is to rapidly overwrite the global variable
 
 To observe this attack in action, we need some hardware. In my personal CAN lab, I use the CANPico boards developed by Canis Labs. In the next section, I will explain step-by-step how to set up your CAN lab.
 
-
-The CANHack toolkit examines the CAN ID and prepares the spoofed frame, ready to be introduced into arbitration as soon as the original frame is transmitted. The effectiveness of the spoofing attack is determined by the duration the original data remains in the global variables before being overwritten.
- 
-
 ## Lab Setup
 
 ### 1. CANPico Board
