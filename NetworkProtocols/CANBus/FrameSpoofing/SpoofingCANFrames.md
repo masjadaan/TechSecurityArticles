@@ -215,7 +215,7 @@ Upon completion of these steps, you should get a result similar to the image dep
 
 Let's examine the current scenario: the sender intends to transmit a CAN message with a CAN ID of 0x123 and data "AA." However, an attacker node, connected to the same bus, is consistently monitoring the CAN bus for this specific CAN ID. Upon detecting the intended message, the attacker node immediately sends a CAN message with the same ID but different data, namely "BB". By looking at the receiver node, we observe that both messages has arrived, with timestamps that are very close to each other.
 
-This is the essence of a basic CAN message spoofing attack. In this scenario, the application may retrieve the "BB" data instead of the legitimate "AA" data. One can envision this data as a command for an actuator or information from a sensor, among other possibilities.
+This is the essence of a basic CAN message spoofing attack and it occurs because distinguishing the origin of a frame, whether it's from a legitimate node or an attacker node, is inherently challenging. In such a scenario, the application may retrieve the "BB" data instead of the legitimate "AA" data. One can envision this data as a command for an actuator or information from a sensor, among other possibilities.
 
 Happy Learning...
 
