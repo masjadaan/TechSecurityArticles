@@ -134,7 +134,11 @@ On the left panel, click on "D0" and rename it to CAN Tx. In addition, click on 
 <br>
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/NetworkProtocols/CANBus/FrameSpoofing/images/CANRx.png)
 
-Navigate to the decoder, search for the CAN protocol decode, and add it. You will see a green CAN symbol on the left panel; click on it and apply the following configuration: set CAN RX to CAN Rx, set the bitrate to 500,000, and configure the Sample point to 75% as depected in image below.
+Navigate to the decoder button, search for the CAN protocol decode, and add it.
+![alt text]()
+
+
+You will see a green CAN symbol on the left panel; click on it and apply the following configuration: set CAN RX to CAN Rx, set the bitrate to 500,000, and configure the Sample point to 75% as depected in image below.
 
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/NetworkProtocols/CANBus/FrameSpoofing/images/CANDecoder.png)
 
