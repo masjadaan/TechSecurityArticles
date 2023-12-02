@@ -123,7 +123,7 @@ Once the physical connections are in place, the next step is to configure PulseV
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/NetworkProtocols/CANBus/FrameSpoofing/images/Saleae.png)
 
 
-Since our focus is solely on channels D0 and D1, thus we can disable all channels and select only D0 and D1, then close the windoe closing unnecessary windows.
+Since our focus is solely on channels D0 and D1, thus we can disable all channels and select only D0 and D1, then close the windows.
 
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/NetworkProtocols/CANBus/FrameSpoofing/images/DoD1.png)
 
