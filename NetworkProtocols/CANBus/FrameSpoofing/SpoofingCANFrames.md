@@ -135,6 +135,7 @@ On the left panel, click on "D0" and rename it to CAN Tx. In addition, click on 
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/NetworkProtocols/CANBus/FrameSpoofing/images/CANRx.png)
 
 Navigate to the decoder button, search for the CAN protocol decode, and add it.
+
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/NetworkProtocols/CANBus/FrameSpoofing/images/decoder.png)
 
 
