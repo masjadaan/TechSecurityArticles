@@ -35,6 +35,7 @@ To observe this attack in action, we need some hardware. In my personal CAN lab,
 ## Lab Setup
 
 For our setup, we will use three CANPico boards to replicate a scenario where a sender and receiver communicate on the CAN bus while an attacker is also connected to the same bus. Furthermore, we will connect a Logic Analyzer to the Attacker board as depicted in the image below.
+
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/NetworkProtocols/CANBus/FrameSpoofing/images/LabSetup.png)
 
 ### 1. CANPico Board
@@ -65,6 +66,7 @@ thonny
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/NetworkProtocols/CANBus/FrameSpoofing/images/Thonny_ttyACM.png)
 
 If everything proceeds as expected, you should establish a connection and view the MicroPython version.
+
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/NetworkProtocols/CANBus/FrameSpoofing/images/Thonny_MicroPython.png)
 
 Let's perform the same steps for the Sender board, connect it first to your computer
