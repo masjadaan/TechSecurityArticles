@@ -18,7 +18,7 @@ In this article, we will explore and experiment with frame spoofing in a CAN bus
 
  
  ## Applications Handling CAN frames
-When a CAN frame is received by a microcontroller, the CAN ID is processed through a hardware mechanism known as the 'ID Acceptance Filter Table.' Each node on a CAN bus typically has an ID acceptance filter table, which, in simple terms, is a list of specific CAN IDs that the node is programmed to accept or reject. Therefore, if the frame passes this comparison, it is forwarded to the receiving side. However, if it fails to meet the acceptance criteria, the frame is discarded.
+When a CAN frame is received by a microcontroller, the CAN ID is processed through a hardware mechanism known as the 'ID Acceptance Filter Table' Each node on a CAN bus typically has an ID acceptance filter table, which, in simple terms, is a list of specific CAN IDs that the node is programmed to accept or reject. Therefore, if the frame passes this comparison, it is forwarded to the receiving side. However, if it fails to meet the acceptance criteria, the frame is discarded.
 
 Accepted CAN frames are stored in a receive buffer, often implemented as a First-In-First-Out (FIFO) structure. The CAN software stack is typically notified of the available frames in the buffer either by raising an interrupt or through software polling. By examining the buffer, the CAN software stack extracts relevant information from the frames and stores them in global variables. The application, running in a loop, reads the global variables to determine the most updated values and makes decisions on various activities based on these values.
 
