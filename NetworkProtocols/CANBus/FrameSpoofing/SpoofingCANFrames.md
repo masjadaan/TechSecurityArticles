@@ -128,7 +128,7 @@ Since our focus is solely on channels D0 and D1, thus we can disable all channel
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/NetworkProtocols/CANBus/FrameSpoofing/images/DoD1.png)
 
 
-On the left panel, click on "D0" and rename to CAN Tx. In addition, click on D1 and rename to CAN Rx then set the trigger to a `Falling Edge` and close the window.
+On the left panel, click on "D0" and rename it to CAN Tx. In addition, click on D1 and rename it to CAN Rx then set the trigger to a `Falling Edge` and close the window.
 
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/NetworkProtocols/CANBus/FrameSpoofing/images/CANTx.png)
 <br>
