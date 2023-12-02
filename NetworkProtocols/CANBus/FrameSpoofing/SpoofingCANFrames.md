@@ -12,7 +12,7 @@
 - PulseView
 
 ## Introduction
-Controller Area Network (CAN) is a communication protocol developed by Robert Bosch and standardized as ISO 11898-1 and ISO 11898-2. It is utilized in various industries, including automotive, railway, industrial automation, and many more. Despite its widespread usage and advantages, it raises certain security concerns. For instance, CAN packets are broadcasted to all nodes on the network. This means that a malicious component can passively sniff on all communications or actively send packets to any other node on the network.
+Controller Area Network (CAN) is a communication protocol developed by Robert Bosch and standardized as ISO 11898-1 and ISO 11898-2. It is utilized in various industries, including automotive, railway, industrial automation, and many more. Despite its widespread usage and advantages, it raises certain security concerns. For instance, CAN frames are broadcasted to all nodes on the network. This means that a malicious component can passively sniff on all communications or actively send packets to any other node on the network.
 
 In this article, we will explore and experiment with frame spoofing in a CAN bus environment. However, before proceeding with this attack, let's discuss how applications usually handle CAN frames.
 
