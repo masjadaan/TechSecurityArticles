@@ -34,12 +34,13 @@ To observe this attack in action, we need some hardware. In my personal CAN lab,
 
 ## Lab Setup
 
-### 1. CANPico Board
-The CANPico board is designed to be placed on top of the Raspberry Pi Pico. It features an enhanced CAN controller (MCP2517FD) and CAN transceiver. The board comes with an open-source SDK for MicroPython that incorporates the CANHack toolkit API. This API enables the execution of low-level attacks on the CAN protocol. For more details, please visit the official website of [Canis Labs](https://canislabs.com/). The following is the pin diagram and the pins for connecting a logic analyzer.
-![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/NetworkProtocols/CANBus/FrameSpoofing/images/PinDiagram.png)
-
 For our setup, we will use three CANPico boards to replicate a scenario where a sender and receiver communicate on the CAN bus while an attacker is also connected to the same bus. Furthermore, we will connect a Logic Analyzer to the Attacker board as depicted in the image below.
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/NetworkProtocols/CANBus/FrameSpoofing/images/LabSetup.png)
+
+### 1. CANPico Board
+The CANPico board is designed to be placed on top of the Raspberry Pi Pico. It features an enhanced CAN controller (MCP2517FD) and CAN transceiver. The board comes with an open-source SDK for MicroPython that incorporates the CANHack toolkit API. This API enables the execution of low-level attacks on the CAN protocol. For more details, please visit the official website of [Canis Labs](https://canislabs.com/). The following is the pin diagram and the pins for connecting a logic analyzer.
+
+![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/NetworkProtocols/CANBus/FrameSpoofing/images/PinDiagram.png)
 
 ### 2. Thonny
 Thonny is a free and open-source Python IDE. It will be our tool for writing Python code to program the sender, receiver, and attacker nodes. It can be easily installed by running the following command:
