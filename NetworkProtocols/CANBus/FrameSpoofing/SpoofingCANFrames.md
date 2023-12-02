@@ -24,7 +24,7 @@ Accepted CAN frames are stored in a receive buffer, often implemented as a First
 
 In summary, when a CAN frame is received, it results in updates to the global variables within the application.
 
-![2c9ab6f8831e9320a1b052d6e24a242a.png](:/eb008bd11e404addbb0bc0b19b2be73f)
+![alt text]()
 
 
 ## Spoofing Attack
@@ -40,10 +40,10 @@ The CANHack toolkit examines the CAN ID and prepares the spoofed frame, ready to
 
 ### 1. CANPico Board
 The CANPico board is designed to be placed on top of the Raspberry Pi Pico. It features an enhanced CAN controller (MCP2517FD) and CAN transceiver. The board comes with an open-source SDK for MicroPython that incorporates the CANHack toolkit API. This API enables the execution of low-level attacks on the CAN protocol. For more details, please visit the official website of [Canis Labs](https://canislabs.com/). The following is the pin diagram and the pins for connecting a logic analyzer.
-![9fce8a95e8cf75128565d5c5854e95df.png](:/f837ff4518f04c88a4e46ab15b9be937)
+![alt text]()
 
 For our setup, we will use three CANPico boards to replicate a scenario where a sender and receiver communicate on the CAN bus while an attacker is also connected to the same bus. Furthermore, we will connect a Logic Analyzer to the Attacker board as depicted in the image below.
-![9db7b5950af9efdfc454967e29405cac.png](:/10a34179947048ddaaac73e0cae4acaa)
+![alt text]()
 
 ### 2. Thonny
 Thonny is a free and open-source Python IDE. It will be our tool for writing Python code to program the sender, receiver, and attacker nodes. It can be easily installed by running the following command:
@@ -65,10 +65,10 @@ From the output of ls command, we see that our computer has recognized the Attac
 thonny
 # Tools -> Option -> Interpreter -> MicroPython (Raspberry Pi Pico) and Port -> /dev/ttyACM0
 ```
-![ed4c47455889ffb48e0a7a0021d1fb55.png](:/6e4bdd1b87414fbfa8fd3c314b724c36)
+![alt text]()
 
 If everything proceeds as expected, you should establish a connection and view the MicroPython version.
-![a1913a946edeadc24994e562fb82b0c1.png](:/b455bdb2ae6742f3b775c3320d7ceabc)
+![alt text]()
 
 Let's perform the same steps for the Sender board, connect it first to your computer
 ```
@@ -120,28 +120,27 @@ sudo apt-get install fuse
 First of all, let's start by using two wire jumpers: one to connect CH1 on the Logic Analyzer to the Tx pin on the CANPico Attacker board, and the other to connect CH2 on the Logic Analyzer to the Rx pin on the CANPico Attacker board.
 
 Once the physical connections are in place, the next step is to configure PulseView to align with our specific environment. After launching PulseView, ensure that the Saleae Logic option is selected.
-![7154d4850f8f0d459ab2b3453f6ba98f.png](:/96541c80a8a84ad48899ef06bff06520)
+![alt text]()
 
 
 Since our focus is solely on channels D0 and D1, thus we can disable all channels and select only D0 and D1, then close the windoe closing unnecessary windows. 
-![d8400a9556ce99c4054c0e31cebdece5.png](:/f3a505db029943e49dee0055fb63145a)
+![alt text]()
 
 
 On the left panel, click on "D0" and rename to CAN Tx. In addition, click on D1 and rename to CAN Rx then set the trigger to a `Falling Edge` and close the window.
-![ca9ee01ff9d9bc76c4e18ca2190bd7e3.png](:/83ad8e09d9334c4cb01bbd4c0be32e39)
-![495fe2b2397d05e7bd31305b84460547.png](:/3273673f017f40149b52d751d91b31e6)
+![alt text]()
+![alt text]()
 Navigate to the decoder, search for the CAN protocol decode, and add it. You will see a green CAN symbol on the left panel; click on it and apply the following configuration: set CAN RX to CAN Rx, set the bitrate to 500,000, and configure the Sample point to 75% as depected in image below.
-![2cb61d974908389a48c756f58ecbd748.png](:/a2a8518c518b4cf79b8fba20a6ff30f0)
-![25be01c415a0c58b64576f7b715ba9c1.png](:/1feafc2865064836ae32484bc63718e1)
+![alt text]()
 
 To ensure proper framing, set the pre-trigger to 20% to accommodate idle time before the start of a frame.
-![c11b3c4152fa8f6543ff0b41f32ad948.png](:/59a61052bd154460a91818cf49d84103)
+![alt text]()
 
 One last thing is to set is the sampling rate, which is the number of samples taken from an analog signal within a specific time interval measured by Hertz (Hz). Let's choose 16MHz with a total of 50k samples, providing a 3-second window for a complete CAN frame.
-![ad44a30b36666aba1643583c28073b2d.png](:/14662c0fdcc64a8c838f582fc2716010)
+![alt text]()
 
 Now let's put everthing together, and our final setup looks like this:
-![54adfabf324132ed744f7d090d162d9c.png](:/e2aada8490ac42ae8025506c187116d6)
+![alt text]()
 
 ## Executing Frame Spoofing Attack
 As we discussed earlier, we're going to set up three CANPico nodes: one for sending, one for receiving, and one for attacking. Now, let's dive into the sender node. First things first, we initialize the CAN controller. After that, we create a CAN frame with an ID of 0x123 and data set as "AA". To send this frame on the bus, we use a simple for loop, sending it out with a one-second delay between each frame. Take a look at the code snippet below:
@@ -198,7 +197,7 @@ To initiate the attack, follow these steps in sequence:
 4. Finally, execute the attacker code.
 
 Upon completion of these steps, you should get a result similar to the image depicted below.
-![49fcc7037b9c54151fe35d9e2c931332.png](:/02451c943ecf491dace90ebb0cc49485)
+![alt text]()
 
 Let's examine the current scenario: the sender intends to transmit a CAN message with a CAN ID of 0x123 and data "AA." However, an attacker node, connected to the same bus, is consistently monitoring the CAN bus for this specific CAN ID. Upon detecting the intended message, the attacker node immediately sends a CAN message with the same ID but different data, namely "BB". By looking at the receiver node, we observe that both messages has arrived, with timestamps that are very close to each other.
 
