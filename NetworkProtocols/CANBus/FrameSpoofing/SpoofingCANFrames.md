@@ -128,8 +128,10 @@ Since our focus is solely on channels D0 and D1, thus we can disable all channel
 
 
 On the left panel, click on "D0" and rename to CAN Tx. In addition, click on D1 and rename to CAN Rx then set the trigger to a `Falling Edge` and close the window.
+
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/NetworkProtocols/CANBus/FrameSpoofing/images/CANTx.png)
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/NetworkProtocols/CANBus/FrameSpoofing/images/CANRx.png)
+
 Navigate to the decoder, search for the CAN protocol decode, and add it. You will see a green CAN symbol on the left panel; click on it and apply the following configuration: set CAN RX to CAN Rx, set the bitrate to 500,000, and configure the Sample point to 75% as depected in image below.
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/NetworkProtocols/CANBus/FrameSpoofing/images/CANDecoder.png)
 
