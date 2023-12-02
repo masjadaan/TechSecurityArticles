@@ -120,10 +120,12 @@ sudo apt-get install fuse
 First of all, let's start by using two wire jumpers: one to connect CH1 on the Logic Analyzer to the Tx pin on the CANPico Attacker board, and the other to connect CH2 on the Logic Analyzer to the Rx pin on the CANPico Attacker board.
 
 Once the physical connections are in place, the next step is to configure PulseView to align with our specific environment. After launching PulseView, ensure that the Saleae Logic option is selected.
+
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/NetworkProtocols/CANBus/FrameSpoofing/images/Saleae.png)
 
 
-Since our focus is solely on channels D0 and D1, thus we can disable all channels and select only D0 and D1, then close the windoe closing unnecessary windows. 
+Since our focus is solely on channels D0 and D1, thus we can disable all channels and select only D0 and D1, then close the windoe closing unnecessary windows.
+
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/NetworkProtocols/CANBus/FrameSpoofing/images/DoD1.png)
 
 
@@ -134,15 +136,19 @@ On the left panel, click on "D0" and rename to CAN Tx. In addition, click on D1 
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/NetworkProtocols/CANBus/FrameSpoofing/images/CANRx.png)
 
 Navigate to the decoder, search for the CAN protocol decode, and add it. You will see a green CAN symbol on the left panel; click on it and apply the following configuration: set CAN RX to CAN Rx, set the bitrate to 500,000, and configure the Sample point to 75% as depected in image below.
+
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/NetworkProtocols/CANBus/FrameSpoofing/images/CANDecoder.png)
 
 To ensure proper framing, set the pre-trigger to 20% to accommodate idle time before the start of a frame.
+
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/NetworkProtocols/CANBus/FrameSpoofing/images/preTrigger.png)
 
 One last thing is to set is the sampling rate, which is the number of samples taken from an analog signal within a specific time interval measured by Hertz (Hz). Let's choose 16MHz with a total of 50k samples, providing a 3-second window for a complete CAN frame.
+
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/NetworkProtocols/CANBus/FrameSpoofing/images/sampleRate.png)
 
 Now let's put everthing together, and our final setup looks like this:
+
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/NetworkProtocols/CANBus/FrameSpoofing/images/FinalSetup.png)
 
 ## Executing Frame Spoofing Attack
@@ -200,6 +206,7 @@ To initiate the attack, follow these steps in sequence:
 4. Finally, execute the attacker code.
 
 Upon completion of these steps, you should get a result similar to the image depicted below.
+
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/NetworkProtocols/CANBus/FrameSpoofing/images/Attack.png)
 
 Let's examine the current scenario: the sender intends to transmit a CAN message with a CAN ID of 0x123 and data "AA." However, an attacker node, connected to the same bus, is consistently monitoring the CAN bus for this specific CAN ID. Upon detecting the intended message, the attacker node immediately sends a CAN message with the same ID but different data, namely "BB". By looking at the receiver node, we observe that both messages has arrived, with timestamps that are very close to each other.
