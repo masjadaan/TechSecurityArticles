@@ -1,5 +1,17 @@
 # Have You Met The Dynamic Linker
 ***
+
+## Test Environment
+
+**Software**
+- Ubuntu (16.04.7 LTS (Xenial Xerus), x86_64 GNU/Linux)
+- gcc
+- xxd
+- readelf
+- objdump
+- gdb
+
+## Introduction 
 A binary undergoes multiple phases before it becomes executable. Typically, the process begins with source code, followed by compilation, static linking, loading/dynamic linking, and ultimately execution. This article focuses on dynamic linking, a mechanism that allows a program to use external libraries at runtime. This means that the code from these libraries is not integrated into the executable during the compilation phase. Instead, the program includes references to external functions, and the linking with the libraries takes place dynamically during runtime when the program is loaded into memory.
 
 Before exploring the mechanics of this process, let's introduce three key concepts: Executable and Linking Format (ELF), the Global Offset Table (GOT), and the Procedure Linkage Table (PLT).
