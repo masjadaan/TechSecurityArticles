@@ -7,7 +7,7 @@
 2. Logic Analyzer (Saleae Logic)
 
 ### Software
-- Kali Linux
+- Kali Linux (6.5.0-kali3-amd64)
 - Thonny
 - PulseView
 
