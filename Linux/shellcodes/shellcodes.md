@@ -1,5 +1,18 @@
 # ShellCodes
 * * *
+
+## Test Environment
+
+**Software**
+
+- Ubuntu (16.04.7 LTS (Xenial Xerus), x86_64 GNU/Linux)
+- gcc
+- nasm
+- xxd
+- ausyscall
+
+
+## Introduction 
 Shellcode is a set of machine code instructions typically written in assembly language, designed to be executed directly by a computer's processor. Because assembly's instructions are architecture-specific that restricts the portability of shellcodes among different processors. In general, shellcode focuses on direct manipulation of processor registers, configuring them for various system calls using opcodes. Once the assembly code is crafted to execute the desired operation, then it must be converted into machine code. However, this will not be enough, removing all null bytes is crucial. The reason is that many string operations, such as strcpy(), stop when encountering null bytes.
 
 To better understand shellcodes, we'll first examine two fundamental concepts: Assembler and System Calls (syscall).
