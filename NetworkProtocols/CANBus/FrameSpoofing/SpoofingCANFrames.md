@@ -41,7 +41,7 @@ For our setup, we will use three CANPico boards to replicate a scenario where a 
 ### 1. CANPico Board
 The CANPico board is designed to be placed on top of the Raspberry Pi Pico. It features an enhanced CAN controller (MCP2517FD) and CAN transceiver. The board comes with an open-source SDK for MicroPython that incorporates the CANHack toolkit API. The Canis Lab documentation mentions "The CANHack software is provided as generic C that ‘bit bangs’ the TX pin using spin loops. It has been ported to the RP2040 microcontroller in the Raspberry Pi Pico and been wrapped with a Python API in custom MicroPython firmware for the Raspberry Pi Pico. The generic C and the MicroPython API code are available in the Canis Labs [repository](https://github.com/kentindell/canhack)"
 
-This CANHack toolkit API enables the execution of low-level attacks on the CAN protocolwhich we will utilize in our domestation later on. For more details, please visit the official website of [Canis Labs](https://canislabs.com/). The following is the pin diagram and the pins for connecting a logic analyzer.
+This CANHack toolkit API enables the execution of low-level attacks on the CAN protocol, which we will use in our domestation later on. For more details, please visit the official website of [Canis Labs](https://canislabs.com/). The following is the pin diagram and the pins for connecting a logic analyzer.
 
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/NetworkProtocols/CANBus/FrameSpoofing/images/PinDiagram.png)
 
