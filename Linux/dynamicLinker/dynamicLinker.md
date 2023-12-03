@@ -44,7 +44,7 @@ Now, let's talk about the sections within an ELF file. These include:
 To make things more tangible, let's create our own ELF file for the demonstrations in this article. We'll name it "linker," and we'll use the C programming language to put together a simple program.
 
 ### <span style="color: #7f7fff">The C code</span>
-We've written a very straightforward C code that does something simple. It prints the words "Hello, Dynamic Linker!" on the screen. In addition, we've added two variables—one uninitialized and the other initialized to 1. By doing this, we've set the stage for creating the corresponding sections.
+We've written a very straightforward C code that does something simple. It prints the words "Hello, Dynamic Linker!" on the screen. In addition, we've added two variables—one uninitialized and the other initialized to 1.
 ```C
 #include <stdio.h>
 
@@ -150,7 +150,7 @@ gdb linker
 (gdb) disas main
 ```
 
-Look for the call to the puts function. Now, puts() is a function that prints a string to standard output (stdout), kind of like printf(), but without the format strings. This raises the question, where does this puts function come from? 
+Look for the call to the puts() function. Now, puts() is a function that prints a string to standard output (stdout), much like printf(), but without the use of format strings. The reason we see puts() instead of printf() is that the compiler has optimized the printf() call to the simpler function, puts(). This is a common optimization strategy to reduce code size and improve performance. However, this raises the question, where does this puts function come from?
 ![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/Linux/dynamicLinker/images/GDB/assembly/disasMain.png)
 
 To answer this question, we'll set up two breakpoints—one just before calling puts() and the other immediately after the call. This way, we can dissect the program's behavior at these critical points.
