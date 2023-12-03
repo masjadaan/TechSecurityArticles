@@ -3,8 +3,8 @@
 
 ## Test Environment
 ### Hardware
-1. CANPico boards
-2. Logic Analyzer (Saleae Logic)
+- CANPico boards
+- Logic Analyzer (Saleae Logic)
 
 ### Software
 - Kali Linux (6.5.0-kali3-amd64)
