@@ -58,7 +58,7 @@ Usage: ./letmein <password>
 ./letmein mysecret
 Incorrect Passowrd. Try again... 
 ```
-![f861a761f5e80458d5b25f58daa517b9.png](:/6b8a1ca1e09845089fd0b22f951ced6c)
+![alt text]()
 
 ## Give me the password
 "As reading the letmein.c source code, you might have noticed the absence of the get_password() function implementation. This omission is intentional; when you run the 'strings' command on the letmein binary, the password won't be revealed. However, a closer look reveals the inclusion of the "secret.h" header, suggesting that get_password() is defined in an external library dynamically linked to the letmein program during runtime.
@@ -72,13 +72,13 @@ gdb -q letmein
 pwndbg> disassemble main
 
 ```
-![c086bf6c9d2acec03ba9cf1fefe51b4f.png](:/121d719de5d54838aafcb163b9a9b7f4)
+![alt text]()
 
 As you can see in the image above, within the main function, there's a call to the authenticate() function located at address 0x400867. Let's trace this call and proceed to disassemble the authenticate() function for a closer examination.
 ```sh
 pwndbg> disassemble authenticate
 ```
-![956b16ed117545b2854b4efc90007455.png](:/a4fda75bfa8948fc862b96dcc12e8b94)
+![alt text]()
 
 When examining the authenticate function code, interestingly, there are two methods to obtain the password. Can you take a guess before we delve into it?
 
@@ -88,14 +88,14 @@ At address 0x4007d8, there's a call to the get_password function, and judging by
 break *0x00000000004007dd
 run AAAAAAAA
 ```
-![706b00cd9b808ce9bd26ee49aef3280d.png](:/8f826a66271346fe956bbf29cd8d511c)
+![alt text]()
 
 The execusion should be halted at the breakpoint and when examining RAX register, we can see the password
 ```sh
 pwndbg> x/s $rax
 0x7ffff7c00679: "p4ssw0rd"
 ```
-![ab528e8e987351afaeae5f88f97ffff7.png](:/4f45cd7c59054625a167e9f41b1536e9)
+![alt text]()
 
 The second approach involves recognizing that the strcmp function takes our provided password as its first argument and the stored password as its second argument. We also know form the "Calling Convention" that the first six arguments to a function are passed in registers in the following order:
 |Register| Argument Number|
@@ -112,19 +112,19 @@ This implies that we can set a breakpoint just before the call to strcmp. By add
 break *0x400802 if strcmp((char *)$rdi, "AAAAAAAA") == 0
 continue
 ```
-![74aee3099936644c8fefff5677593ead.png](:/605c1d665d184b889075386205250cdd)
+![alt text]()
 
 You can also examin the value in register RSI itself by running the command
 ```sh
 x/s $rsi
 ```
-![100a1333933f89beb0cf07c33cbeffa7.png](:/689bb5f0175a494e892b45ebb0f6a9c9)
+![alt text]()
 
 Now we know the password, so lets run our program and supply the correct password
 ```
 ./letmein p4ssw0rd
 ```
-![db2dd59abbd2f2d863e0b9f91c210b44.png](:/7fb9527e06cf49c29e5316ce52da88c2)
+![alt text]()
 
 
 Happy Learning...
@@ -155,4 +155,4 @@ gcc -fPIC -shared secret.c -o libsecret.so
 gcc letmein.c -L. -lsecret -Wl,-rpath=. -z execstack -fno-stack-protector -o letmein
 ```
 
-![edaa317db701fd4f954edd1011ae8fac.png](:/5c7fb4db2e09457090748461b45c5758)
+![alt text]()
