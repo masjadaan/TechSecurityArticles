@@ -90,7 +90,7 @@ run AAAAAAAA
 ```
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/Linux/whatIsPassword/images/1st_breakpoint.png)
 
-The execusion should be halted at the breakpoint and when examining RAX register, we can see the password
+The execution should be halted at the breakpoint and when examining RAX register, we can see the password
 ```sh
 pwndbg> x/s $rax
 0x7ffff7c00679: "p4ssw0rd"
@@ -114,7 +114,7 @@ continue
 ```
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/Linux/whatIsPassword/images/2nd_breakpoint.png)
 
-You can also examin the value in register RSI itself by running the command
+You can also examine the value in register RSI itself by running the command
 ```sh
 x/s $rsi
 ```
@@ -129,7 +129,7 @@ Now we know the password, so lets run our program and supply the correct passwor
 
 Happy Learning...
 
-### Apendix A
+### Appendix A
 If you wish to follow along, we've included the secret.c file, which will be compiled as a library, along with the secret.h header file. You should already have the letmein.c file. With these files in place, you're all set for compilation. Just follow these commands:
 
 #### secret.c
@@ -150,9 +150,17 @@ char* get_password();
 ```
 
 #### Compilation
+The following command compiles the C code in secret.c into a shared library named 'libsecret.so'. Shared libraries are dynamically linked at runtime and can be used by other programs.
 ```sh
 gcc -fPIC -shared secret.c -o libsecret.so
-gcc letmein.c -L. -lsecret -Wl,-rpath=. -z execstack -fno-stack-protector -o letmein
 ```
+- -fPIC: to generate position-independent code (PIC).
+
+This command compiles the C code in letmein.c into an executable named letmein. The executable links against the libsecret.so shared library. The additional flags are used for specific configurations such as specifying the library search path, setting the runtime library search path, marking the executable stack as executable, and disabling stack protection.
+```sh
+gcc letmein.c -L. -lsecret -Wl,-rpath=. -z execstack -fno-stack-protector -o letmein
+
+```
+- -lsecret: Link against the libsecret.so library.
 
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/Linux/whatIsPassword/images/compilation.png)
