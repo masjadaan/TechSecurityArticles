@@ -61,7 +61,7 @@ Incorrect Passowrd. Try again...
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/Linux/whatIsPassword/images/first_run.png)
 
 ## Give me the password
-"As reading the letmein.c source code, you might have noticed the absence of the get_password() function implementation. This omission is intentional; when you run the 'strings' command on the letmein binary, the password won't be revealed. However, a closer look reveals the inclusion of the "secret.h" header, suggesting that get_password() is defined in an external library dynamically linked to the letmein program during runtime.
+When reading the letmein.c source code, you might have noticed the absence of the get_password() function implementation. This omission is intentional; when you run the 'strings' command on the letmein binary, the password won't be revealed. However, a closer look reveals the inclusion of the "secret.h" header, suggesting that get_password() is defined in an external library dynamically linked to the letmein program during runtime.
 
 Our goal here is to access the password during runtime. At this stage of execution, the password gets copied from its external source into a register. To uncover this process, let's turn to our friend the GDB.
 
@@ -130,7 +130,7 @@ Now we know the password, so lets run our program and supply the correct passwor
 Happy Learning...
 
 ### Appendix A
-If you wish to follow along, we've included the secret.c file, which will be compiled as a library, along with the secret.h header file. You should already have the letmein.c file. With these files in place, you're all set for compilation. Just follow these commands:
+If you wish to follow along, we've included the secret.c file, which will be compiled as a library, along with the secret.h header file. You should already have the letmein.c file. With these files in place, you're all set for compilation. Upon successful compilation, you'll obtain the letmein binary for hands-on practice.
 
 #### secret.c
 ```C
