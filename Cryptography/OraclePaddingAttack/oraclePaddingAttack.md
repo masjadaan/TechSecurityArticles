@@ -21,10 +21,10 @@ As previously mentioned, block ciphers employ a fixed-size block, necessitating 
 Public Key Cryptography Standards #7 (PKCS#7) stands out as a widely recognized cryptographic standard defining a padding scheme used to pad the last block of plaintext before encryption in block cipher modes requiring a fixed block size.
 
 To understand the workings of this padding, consider an example with a block size of 8 bytes and the words "Exploit, Attack, Cyber, Hack" requiring padding. The image below illustrates how padding is applied to these words. If a word's length is less than the block size, padding is added until the word reaches the exact block size length, and the value of the padding is the number of bytes added. For instance, "Exploit" needs only one byte, and the value of the padded byte is 0x01. However, "Hack" needs 4 bytes of padding, with the value of the padding byte being 0x04.
-![0389b09057a68f49732a0364a397105b.png](:/9bd0b5d0441a4c169bff29ea862ee361)
+![alt text]()
 
 In another scenario, when a word's length matches the block size exactly, a new block is added, and the value of the padded bytes is set to 0x08, as demonstrated when encrypting the word "Standard."
-![223d619f1855acbec8ca343ec4bc1caf.png](:/0228aaa3a1524119b86624a90958b703)
+![alt text]()
 
 While the concept of padding may seem straightforward, let's delve into another essential concept.
 
@@ -50,7 +50,7 @@ However, this is not the case for the initial block because it doesn't have a pr
 ```
 (IV) ^ (Plaintext data block 1)
 ```
-![c86a39ba1865f429936411ec53c94422.png](:/0d2eb52351cf46f4b91ad5bee1cb3257)
+![alt text]()
 
 #### Decryption
 Now, regarding decryption, the ciphertext of the previous block is XORed with the output of the decrypting algorithm of the next block (First decryption, then XOR). In simpler terms:
@@ -62,7 +62,7 @@ But again, there's a special case for the first block, and here the Initializati
 ```
 (IV) ^ (Decrypting Algorithm output block 1)
 ```
-![96bdea4cd7cda217483adc59189fbcc4.png](:/0cb11f5373ff4348a1c6461c1f09a32e)
+![alt text]()
 
 
 Now that we've discussed the essential concepts, let's delve into the attack itself.
@@ -82,7 +82,7 @@ As we lack the secret key, decrypting this cookie is currently beyond our reach.
 **Note**: *In many implementations, the IV is transmitted with the message. However, in our scenario, the initial 16 bytes in "encrypted_data" represent the IV values, while the remainder constitutes the encrypted message (cookie).*
 
 For simplicity, this attack focuses on a single block. Let's explore the decryption process for one block. 
-![c62e600f26ddc3470e29ed36cdc8e0fb.png](:/52082000f62d4c1cab12a918e6e3d39a)
+![alt text]()
 
 The ciphertext is initially decrypted by AES using the hidden secret key on the server, generating an intermediate value, referred to as the keystream. Subsequently, this keystream is XORed with the IV to produce the plaintext. For an attacker, the keystream is unknown, or is it?
 
@@ -105,7 +105,7 @@ modified_ct = modified_iv + cookies
 ```
 
 Upon sending the modified cookie to the server for decryption, an error is returned, signaling a padding error. This failure indicates that the server checks the last byte of the plaintext and identifies it as an invalid padding byte.
-![dfc6b07d8925837b117543708715f46e.png](:/196f3643736447e0ac3ce6c1a0201462)
+![alt text]()
 
 Undeterred by the initial failure, we refine our approach. Focusing on one byte at a time, we begin with the last byte of the IV (the 16th byte of IV). Incrementing it by one, we resend the modified cookie for decryption. Once again, an error is received, indicating invalid padding. We repeat this process until the server no longer sends a padding error. When this occurs, it signifies correct padding, revealing that the last byte of the plaintext has the byte value 0x01, in line with the earlier-discussed padding scheme.
 
@@ -114,7 +114,7 @@ Now armed with the knowledge of the IV byte value that avoids a padding error an
 Keystream[15] = IV[15] ^ 0x01
 Keystream[15] = 0x35 ^ 0x01 = 0x34
 ```
-![c3328191c207aa4012589e4699c4b834.png](:/6454d0bc0d9f441eb3990bba05b7f589)
+![alt text]()
 
 Next, we repeat the same process for the second to last byte of the IV (the 15th byte of IV), and the challenge is the same we need to guess IV values and send them to the server until we no longer encounter a padding error. However, the difference now is that we require the last two bytes of the plaintext to be 0x02 and 0x02. For the last byte, we can solve it with a simple XOR operation.
 ```
@@ -127,7 +127,7 @@ However, for the second to last byte, we need to try all possible values. Starti
 Keystream[14] = IV[14] ^ 0x02
 Keystream[14] = 0x35 ^ 0x02 = 0x37
 ```
-![46e10313f05baa086af037778122edfa.png](:/0c5586deaf92458da021c2261a8f4593)
+![alt text]()
 
 This process is repeated until all the keystream bytes are recovered. Once accomplished, Phase 1 concludes, and we proceed to Phase 2.
 
@@ -158,10 +158,10 @@ Plaintext[12] = 0x33 ^ 0x57 = 0x64 -> convert to ASCII d
 
 
 This process continues until we recover the entire plaintext.
-![055f043714966852195cc4de050c37ae.png](:/825e7bdd2eaf4bcdb514691c5f50b977)
+![alt text]()
 
 That's the essence of how the Oracle Padding Attack works. Cryptography sure is fascinating, isn't it?
-![3db5eea9dbc7415897f03b2dbcc62466.png](:/9dc2dd3ed3ef48d3999337aa3bbc6cd5)
+![alt text]()
 
 ## Appendix A
 If you wish to observe the decryption of the ciphertext, both the server and client applications are available on my GitHub repository.
