@@ -1,0 +1,5 @@
+pip install Flask
+pip install pycryptodome
+pip install requests
+
+flask~=3.0.0
