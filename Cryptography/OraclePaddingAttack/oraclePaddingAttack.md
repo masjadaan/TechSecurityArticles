@@ -160,7 +160,7 @@ Plaintext[12] = 0x33 ^ 0x57 = 0x64 -> convert to ASCII d
 This process continues until we recover the entire plaintext.
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/Cryptography/OraclePaddingAttack/images/plaintext.png)
 
-That's the essence of how the Oracle Padding Attack works. Cryptography sure is fascinating, isn't it?
+That's the essence of how the Oracle Padding Attack works. Cryptography is fascinating, isn't it?
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/Cryptography/OraclePaddingAttack/images/cover.png)
 
 ## Appendix A
@@ -184,6 +184,9 @@ pip install requests
 ```
 For experimenting with various messages beyond "Hello, Friend!" you can modify the code at the bottom of the client. Simply comment out the existing code, run the client, acquire the new encrypted message, and utilize it to perform the attack once again.
 
+
+Happy Learning
+Mahmoud Jadaan
 
 #### Resources
 - White Paper: [Security Flaws Induced by CBC Padding Applications to SSL, IPSEC, WTLS](https://www.iacr.org/cryptodb/archive/2002/EUROCRYPT/2850/2850.pdf) by Serge Vaudenay
