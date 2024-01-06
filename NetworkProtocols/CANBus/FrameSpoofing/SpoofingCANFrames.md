@@ -219,5 +219,6 @@ Let's examine the current scenario: the sender intends to transmit a CAN message
 
 This is the essence of a basic CAN message spoofing attack and it occurs because distinguishing the origin of a frame, whether it's from a legitimate node or an attacker node, is inherently challenging. In such a scenario, the application may retrieve the "BB" data instead of the legitimate "AA" data. One can think of this data as a command for an actuator or information from a sensor, among other possibilities.
 
-Happy Learning...
+Happy Learning
+Mahmoud Jadaan
 
