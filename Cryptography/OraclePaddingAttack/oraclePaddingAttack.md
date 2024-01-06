@@ -164,7 +164,7 @@ That's the essence of how the Oracle Padding Attack works. Cryptography sure is 
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/Cryptography/OraclePaddingAttack/images/cover.png)
 
 ## Appendix A
-If you wish to observe the decryption of the ciphertext, both the server and client applications are available on my GitHub repository.
+If you wish to observe the decryption of the ciphertext, both the server and client applications are available on my [GitHub repository](https://github.com/masjadaan/TechSecurityArticles/tree/main/Cryptography/OraclePaddingAttack).
 
 The server application establishes a Flask web application with an endpoint "/process" designed to handle POST requests. The endpoint anticipates data in the request body and examines the value of the 'Is-Encrypted' header. If the header is set to 'true,' the received data is presumed to be ciphertext and is decrypted using the AesCbc class from cbc.py. Conversely, if the header is set to 'false,' the received data is assumed to be plaintext and is encrypted using the same class. The implementation for both encryption and decryption is detailed in the cbc.py file.
 
