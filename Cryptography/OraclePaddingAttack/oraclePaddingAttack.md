@@ -185,7 +185,7 @@ pip install requests
 For experimenting with various messages beyond "Hello, Friend!" you can modify the code at the bottom of the client. Simply comment out the existing code, run the client, acquire the new encrypted message, and utilize it to perform the attack once again.
 
 
-Happy Learning
+Happy Learning... <br>
 Mahmoud Jadaan
 
 #### Resources
