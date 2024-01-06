@@ -229,5 +229,5 @@ sudo chmod +s shellcode
 ```
 ![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/Linux/shellcodes/images/shell_without_nulls.png)
 
-Happy Learning
+Happy Learning... <br>
 Mahmoud Jadaan
