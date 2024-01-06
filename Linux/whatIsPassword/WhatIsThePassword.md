@@ -164,5 +164,5 @@ gcc letmein.c -L. -lsecret -Wl,-rpath=. -z execstack -fno-stack-protector -o let
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/Linux/whatIsPassword/images/compilation.png)
 
 
-Happy Learning
+Happy Learning... <br>
 Mahmoud Jadaan
