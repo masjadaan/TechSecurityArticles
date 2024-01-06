@@ -127,8 +127,6 @@ Now we know the password, so lets run our program and supply the correct passwor
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/Linux/whatIsPassword/images/final_run.png)
 
 
-Happy Learning...
-
 ### Appendix A
 If you wish to follow along, we've included the secret.c file, which will be compiled as a library, along with the secret.h header file. You should already have the letmein.c file. With these files in place, you're all set for compilation. Upon successful compilation, you'll obtain the letmein binary for hands-on practice.
 
@@ -164,3 +162,7 @@ gcc letmein.c -L. -lsecret -Wl,-rpath=. -z execstack -fno-stack-protector -o let
 - -lsecret: Link against the libsecret.so library.
 
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/Linux/whatIsPassword/images/compilation.png)
+
+
+Happy Learning
+Mahmoud Jadaan
