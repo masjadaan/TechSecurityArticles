@@ -228,3 +228,6 @@ sudo chmod +s shellcode
 ./shellcode
 ```
 ![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/Linux/shellcodes/images/shell_without_nulls.png)
+
+Happy Learning
+Mahmoud Jadaan
