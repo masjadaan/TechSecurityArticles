@@ -1,16 +1,6 @@
 # What is the password?
 * * *
 
-## Test Environment
-
-**Target Machine**
-- Ubuntu (16.04.7 LTS (Xenial Xerus), x86_64 GNU/Linux)
-- gcc
-
-**Attacker Machine**
-- Kali x86_64 GNU/Linux Rolling
-- gdb
-
 ## Introduction
 
 When it comes to securing passwords, several industry standards and guidelines strongly advise against storing passwords in plain text. Instead, the emphasis is on employing strong, slow-to-compute hash functions for password hashing. The rationale behind this is quite significant; storing passwords directly in compiled binaries poses a serious security risk. This means that if someone gains access to the binary file, they potentially have access to the actual passwords. To demonstrate the real-world impact of this vulnerability, we've created a simple C program "letmein" purposely designed with vulnerabilities, storing passwords in plain text. We then compiled it using GCC without adding any extra layers of protection. Let's dive into the details and see how we can read the password.
@@ -166,3 +156,13 @@ gcc letmein.c -L. -lsecret -Wl,-rpath=. -z execstack -fno-stack-protector -o let
 
 Happy Learning... <br>
 Mahmoud Jadaan
+
+## Test Environment
+
+**Target Machine**
+- Ubuntu (16.04.7 LTS (Xenial Xerus), x86_64 GNU/Linux)
+- gcc
+
+**Attacker Machine**
+- Kali x86_64 GNU/Linux Rolling
+- gdb
