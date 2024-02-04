@@ -92,7 +92,7 @@ Repeat this process for all pins and make a note of your findings. The two image
 ### JTAGulator
 So, have ever heard of Jtagulator? It's a great an open-source hardware tool that can be used to automatically identify the pinout of the JTAG interface (and a bunch of other interfaces too). Jtagulator supports a target voltage from 1.2V to 3.3V and has 24 programmable I/O pins that you can connect to potential JTAG pins. Then, it will run some automatic scanning logic to identify the JTAG pinout for you.
 
-Jtagulator is connected to a PC using a USB interfaceand it is powered by this interface and controlled through a serial terminal emulator like Putty, picocom, etc. you can grab Jtagulator from various sources, including Adafruit.
+Jtagulator is connected to a PC using a USB interface and it is powered by this interface and controlled through a serial terminal emulator like Putty, picocom, etc. you can grab Jtagulator from various sources, including Adafruit.
 
 ![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/jtagulator.png)
 
@@ -103,7 +103,7 @@ We won't be utilizing Jtagulator on all pins; instead, we'll selectively choose 
 
 
 #### Connecting target to Jtagulator
-Now we need jumber wires, first connect GND on Jtagulator to GND on our target. Then connect the canndidates pin on our target to the different channels on Jtagulator. Make sure not to connect the V on Jtagulator to anything.
+Now we need jumber wires, first connect GND on Jtagulator to GND on our target. Then connect the candidates pin on our target to the different channels on Jtagulator. Make sure not to connect the V on Jtagulator to anything.
 
 ![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/targetToJtagulator.png)
 
@@ -137,7 +137,7 @@ Now that we're all set up, let's choose the JTAG interface by typing 'J,' and th
 ![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/J.png)
 
 
-We are interested in Boundry Scan, so type B and follow the instructions. Depends on how many pins are connected to Jtagulator the test might take some time, once complet, Jtagulator present the result where it shows each channel on Jtagulator and the functionality on the target as depected in the image.
+We are interested in Boundary Scan, so type B and follow the instructions. Depends on how many pins are connected to Jtagulator the test might take some time, once complet, Jtagulator present the result where it shows each channel on Jtagulator and the functionality on the target as depected in the image.
 
 ![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/B.png)
 
@@ -178,7 +178,7 @@ Now we know the JTAG interface pins, we need a serial based JTAG adapter board t
 
 In order to work with OpenOCD we need two configuration files, one for the debug adapter board and the other for the chip we are targeting:
 
-- JTAG adapter board Configuratoin file
+- JTAG adapter board Configuration file
 
 ```sh
 adapter driver ftdi
@@ -195,7 +195,7 @@ ll /usr/share/openocd/scripts/target | grep -i esp32
 -rw-r--r-- 1 root root  2582 Sep  5 23:16 esp32.cfg
 ```
 
-As you can see in the image below on top we launched the openocd with the two configuratoin files, at the bottom, we connect to the openocd session using telnet on port 4444
+As you can see in the image below on top we launched the openocd with the two configuration files, at the bottom, we connect to the openocd session using telnet on port 4444
 
 ```sh
 sudo openocd -f /usr/share/openocd/scripts/interface/buspirate.cfg -f /usr/share/openocd/scripts/target/esp32.cfg
@@ -203,11 +203,11 @@ sudo openocd -f /usr/share/openocd/scripts/interface/buspirate.cfg -f /usr/share
 
 ![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/openocd.png)
 
-The reason we can use telnet is because when an OpenOCD session is established, it also starts two aditional services; Telenet on port 4444 and GDBServer on port 3333 (GDBServer maybe for another article). The first thing we need to do is halt the CPU. 
+The reason we can use telnet is because when an OpenOCD session is established, it also starts two additional services; Telenet on port 4444 and GDBServer on port 3333 (GDBServer maybe for another article). The first thing we need to do is halt the CPU. 
 
 ![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/dumpFirmware.png)
 
-the dumped file will be stored in /tmp folder
+The dumped file will be stored in /tmp folder
 
 ![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/examinFirmware.png)
 
