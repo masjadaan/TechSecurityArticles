@@ -103,7 +103,7 @@ We won't be utilizing Jtagulator on all pins; instead, we'll selectively choose 
 
 
 #### Connecting target to Jtagulator
-Now we need jumber wires, first connect GND on Jtagulator to GND on our target. Then connect the candidates pin on our target to the different channels on Jtagulator. Make sure not to connect the V on Jtagulator to anything.
+Now we need jumper wires, first connect GND on Jtagulator to GND on our target. Then connect the candidates pin on our target to the different channels on Jtagulator. Make sure not to connect the V on Jtagulator to anything.
 
 ![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/targetToJtagulator.png)
 
