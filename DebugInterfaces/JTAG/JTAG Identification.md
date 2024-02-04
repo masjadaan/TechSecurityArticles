@@ -215,7 +215,7 @@ dump_image firmware_dump.bin 0x3ff90000 0xffff
 
 ![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/dumpFirmware.png)
 
-The dumped file will be stored in /tmp folder and we can examine it usign xxd command
+The dumped file will be stored in /tmp folder and we can examine it using xxd command
 
 ![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/examinFirmware.png)
 
