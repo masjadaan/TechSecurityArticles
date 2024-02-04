@@ -33,9 +33,11 @@ However, it's easier said than done. So, let's introduce our target and explore 
 Our target, in this article, is the ESP32 System on Chip, which comes with integrated Wi-Fi and Bluetooth connectivity, making it suitable for a wide range of applications. It's important to note that our chosen target is well-documented on the internet, with a lot of information available, including details about the JTAG pins. However, we will use it as an example to learn how to approach the JTAG interface.
 
 - Front-side
+  
 ![alt text](https://raw.githubusercontent.com/masjadaan/TechSecurityArticles/main/DebugInterfaces/JTAG/Images/TargetFrondSide.png)
 
 - Back-side
+  
 ![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/TargetBackSide.png)
 
 ## Identifying Chips
@@ -45,16 +47,18 @@ As we are left with one chip, 'WiFi ESP-WROOM-32', let's search for its datashee
 
 |Manufacturer| Family| Part Number| Image| DataSheet|
 | -- | -- | -- | -- |
-|espressif |WiFi ESP-WROOM-32 |FCC ID: 2AC7Z-ESP32WROOM32 | ![alt text]()| [esp32.pdf](https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32_datasheet_en.pdf)|
-|Silicon Labs | USB to UART Bridge| CP2102|![alt text]()|--|
+|espressif |WiFi ESP-WROOM-32 |FCC ID: 2AC7Z-ESP32WROOM32 | ![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/espressif.png)| [esp32.pdf](https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32_datasheet_en.pdf)|
+|Silicon Labs | USB to UART Bridge| CP2102|![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/siliconlabs.png)|--|
 
 After a quick review of the WiFi ESP-WROOM-32 datasheet, we've learned that the ESP32 is equipped with two powerful Xtensa cores, and the CPU clock frequency is adjustable, ranging from 80 MHz to 240 MHz. The ESP32 features an industry-standard JTAG port, which lacks (and does not require) the TRST pin. Notably, the JTAG I/O pins are all powered from the VDD_3P3_RTC pin, typically supplied by a 3.3 V. This implies that our JTAG adapter needs to be compatible with JTAG pins within that voltage range. The chosen operating system for ESP32 is freeRTOS.
 
 Looking at the "Pin Definitions" section under Pin Layout reveals all the pins, as illustrated in the image below.
-![alt text]()
+
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/pinDefinitions.png)
 
 We observe multiple ground pins and note that the operating voltage is 3.3V. However, our focus is on identifying the JTAG interface pins, which are not visible in the pin layout. Yet, by examining the 'Peripheral Schematics' chapter, we can locate the JTAG interface and see the specific pins to which they are connected.
-![alt text]()
+
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/peripheralSchematics.png)
 
 |JTAG Pins| ESP32 Pins|
 | -- | -- |
@@ -72,9 +76,10 @@ However, in our case, the task is simplified because the ESP32 labels each heade
 A continuity test is usually used to check the integrity of cables, and it's a very simple test that requires a multimeter. When you set the multimeter to continuity test mode and touch both probes, you can hear a beep, which indicates that the circuit is complete. What we will do is fix one probe (black) on a known ground and use the other probe (red) to check all pins on the board. Upon hearing a beep, it signifies that the corresponding pin is a ground (GND).
 
 Repeat this process for all pins and make a note of your findings. The two images below show the process and the found GNDs
-![alt text]()
 
-![alt text]()
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/ContinuityTest.png)
+
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/GND.png)
 
 
 
@@ -88,16 +93,19 @@ Repeat this process for all pins and make a note of your findings. The two image
 So, have ever heard of Jtagulator? It's a great an open-source hardware tool that can be used to automatically identify the pinout of the JTAG interface (and a bunch of other interfaces too). Jtagulator supports a target voltage from 1.2V to 3.3V and has 24 programmable I/O pins that you can connect to potential JTAG pins. Then, it will run some automatic scanning logic to identify the JTAG pinout for you.
 
 Jtagulator is connected to a PC using a USB interfaceand it is powered by this interface and controlled through a serial terminal emulator like Putty, picocom, etc. you can grab Jtagulator from various sources, including Adafruit.
-![alt text]()
+
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/jtagulator.png)
 
 We won't be utilizing Jtagulator on all pins; instead, we'll selectively choose a few, as indicated in the image below (as mentioned before, JTAG pins are already known on the Internet).
-![alt text]()
+
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/SelectedPins.png)
 
 
 
 #### Connecting target to Jtagulator
 Now we need jumber wires, first connect GND on Jtagulator to GND on our target. Then connect the canndidates pin on our target to the different channels on Jtagulator. Make sure not to connect the V on Jtagulator to anything.
-![alt text]()
+
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/targetToJtagulator.png)
 
 #### Connecting Jtagulatro to PC
 We are ready to connect the Jtagulator board to a PC using the USB interface to power up the board. Linux will identify it as a serail device
@@ -106,7 +114,8 @@ lsusb
 ls /dev/ttyUSB*
 # /dev/ttyUSB0
 ```
-![alt text]()
+
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/lsusb.png)
 
 We will use picocom as a terminal emulator to talk to the Jtagulator. On my Kali Linux system, the serial device is "/dev/ttyUSB0," and the baud rate is 115200 bits/sec. 
 
@@ -117,23 +126,17 @@ Our first step is setting the target voltage. Just press 'V' and type '3.3' for 
 sudo apt install picocom
 picocom /dev/ttyUSB0 -b 115200
 ```
-![alt text]()
 
-
-
-
-
-
-
-
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/picocom.png)
 
 
 Now that we're all set up, let's choose the JTAG interface by typing 'J,' and then type 'H' to see the available commands. You will see a list of available tests.
-![alt text]()
+
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/J.png)
 
 
 We are interested in Boundry Scan, so type B and follow the instructions. Depends on how many pins are connected to Jtagulator the test might take some time, once complet, Jtagulator present the result where it shows each channel on Jtagulator and the functionality on the target as depected in the image.
-![alt text]()
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/B.png)
 
 We know now all JTAG interface pins, let's summarize that in this table
 |Jtagulator Channels| Functionality| ESP32 Pins
@@ -143,7 +146,7 @@ We know now all JTAG interface pins, let's summarize that in this table
 |CH2 | TCK | IO13 (MTCK) |
 |CH3 | TDI | IO12 (MTDI) |
 
-![alt text]()
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/identifiedPins.png)
 
 
 
@@ -188,14 +191,14 @@ As you can see in the image below on top we launched the openocd with the two co
 ```
 sudo openocd -f /usr/share/openocd/scripts/interface/buspirate.cfg -f /usr/share/openocd/scripts/target/esp32.cfg
 ```
-![alt text]()
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/openocd.png)
 
 The reason we can use telnet is because when an OpenOCD session is established, it also starts two aditional services; Telenet on port 4444 and GDBServer on port 3333 (GDBServer maybe for another article). The first thing we need to do is halt the CPU. 
 
-![alt text]()
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/dumpFirmware.png)
 
 the dumped file will be stored in /tmp folder
-![alt text]()
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/examinFirmware.png)
 
 
 ## Test Environment
