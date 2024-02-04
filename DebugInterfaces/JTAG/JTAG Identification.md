@@ -203,7 +203,15 @@ sudo openocd -f jtag_adapter.cfg -f /usr/share/openocd/scripts/target/esp32.cfg
 
 ![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/openocd.png)
 
-The reason we can use telnet is because when an OpenOCD session is established, it also starts two aditional services; Telenet on port 4444 and GDBServer on port 3333 (GDBServer maybe for another article). The first thing we need to do is halt the CPU, then wer are ready to dump the memory content. For this exercise, I chose the Internal ROM memoery which has 64KB. This information is available in "Table 12. Embedded Memory Address Mapping" in the [ESP32 Technical Reference Manual](https://www.espressif.com/sites/default/files/documentation/esp32_technical_reference_manual_en.pdf): 
+The reason we can use telnet is because when an OpenOCD session is established, it also starts two aditional services; Telenet on port 4444 and GDBServer on port 3333 (GDBServer maybe for another article). The first thing we need to do is halt the CPU, then wer are ready to dump the memory content. For this exercise, I chose the Internal ROM memoery which has 64KB. This information is available in "Table 12. Embedded Memory Address Mapping" in the [ESP32 Technical Reference Manual](https://www.espressif.com/sites/default/files/documentation/esp32_technical_reference_manual_en.pdf):
+
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/memoryMap.png)
+
+Let's see that in action:
+```sh
+halt
+dump_image firmware_dump.bin 0x3ff90000 0xffff
+```
 
 ![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/dumpFirmware.png)
 
