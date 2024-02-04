@@ -46,7 +46,7 @@ To start, identify the main chips on the board. Generally, when examining the to
 As we are left with one chip, 'WiFi ESP-WROOM-32', let's search for its datasheet on the manufacturer's website or on Google.
 
 |Manufacturer| Family| Part Number| Image| DataSheet|
-| -- | -- | -- | -- |
+| -- | -- | -- | -- | -- |
 |espressif |WiFi ESP-WROOM-32 |FCC ID: 2AC7Z-ESP32WROOM32 | ![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/espressif.png)| [esp32.pdf](https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32_datasheet_en.pdf)|
 |Silicon Labs | USB to UART Bridge| CP2102|![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/siliconlabs.png)|--|
 
@@ -109,6 +109,7 @@ Now we need jumber wires, first connect GND on Jtagulator to GND on our target. 
 
 #### Connecting Jtagulatro to PC
 We are ready to connect the Jtagulator board to a PC using the USB interface to power up the board. Linux will identify it as a serail device
+
 ```sh
 lsusb
 ls /dev/ttyUSB*
@@ -122,6 +123,7 @@ We will use picocom as a terminal emulator to talk to the Jtagulator. On my Kali
 Once connected, we press enter to be greeted by the Jtagulator, then type H for help to print the available commands. We can see there are two types of commands: Target Interface to choose what interface to examine and General Commands to set the target system voltage.
 
 Our first step is setting the target voltage. Just press 'V' and type '3.3' for our case, as that's the voltage we're working with.
+
 ```sh
 sudo apt install picocom
 picocom /dev/ttyUSB0 -b 115200
@@ -136,9 +138,11 @@ Now that we're all set up, let's choose the JTAG interface by typing 'J,' and th
 
 
 We are interested in Boundry Scan, so type B and follow the instructions. Depends on how many pins are connected to Jtagulator the test might take some time, once complet, Jtagulator present the result where it shows each channel on Jtagulator and the functionality on the target as depected in the image.
+
 ![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/B.png)
 
-We know now all JTAG interface pins, let's summarize that in this table
+We know now all JTAG interface pins, let's summarize that in this table:
+
 |Jtagulator Channels| Functionality| ESP32 Pins
 | -- | -- | -- |
 |CH0 | TDO | IO15 (MTDO) |
@@ -153,6 +157,7 @@ We know now all JTAG interface pins, let's summarize that in this table
 ## Dump Firmware
 ### OpenOCD
 OpenOCD supports a fair amount of JTAG adapters. See https://openocd.org/doc/html/Debug-Adapter-Hardware.html for a list of the adapters OpenOCD works with. If you don't have it on your machine you can install it using this command.
+
 ```
 sudo apt install openocd
 ```
@@ -160,6 +165,7 @@ sudo apt install openocd
 
 If you decide to use separate JTAG adapter, look for one that is compatible with both the voltage levels on the ESP32 as well as with the OpenOCD software. 
 Now we know the JTAG interface pins, we need a serial based JTAG adapter board to attach a PC to the JTAG interface. Connect the pins on JTAG adapter board to the JTAG pins on ESP32 as follow:
+
 |Bus Pirate Pins| ESP32 JTAG Pins|
 | --  | -- |
 |GDN  | GND |
@@ -173,7 +179,8 @@ Now we know the JTAG interface pins, we need a serial based JTAG adapter board t
 In order to work with OpenOCD we need two configuration files, one for the debug adapter board and the other for the chip we are targeting:
 
 - JTAG adapter board Configuratoin file
-```
+
+```sh
 adapter driver ftdi
 ftdi vid_pid 0x0403 0x6014 
 ftdi layout_init 0x0c08 0x0f1b
@@ -181,16 +188,19 @@ adapter speed 2000
 ```
 
 - ESP32 Configuration file
-When no target is defined, OpenOCD uses auto probing to discover TAPs. Howerver, it is better to define the configuration file for you chip, also OpenOCD comes already with configuration files for many chips which can be found 
-```
+When no target is defined, OpenOCD uses auto probing to discover TAPs. Howerver, it is better to define the configuration file for you chip, also OpenOCD comes already with configuration files for many chips which can be found
+
+```sh
 ll /usr/share/openocd/scripts/target | grep -i esp32
 -rw-r--r-- 1 root root  2582 Sep  5 23:16 esp32.cfg
 ```
 
 As you can see in the image below on top we launched the openocd with the two configuratoin files, at the bottom, we connect to the openocd session using telnet on port 4444
-```
+
+```sh
 sudo openocd -f /usr/share/openocd/scripts/interface/buspirate.cfg -f /usr/share/openocd/scripts/target/esp32.cfg
 ```
+
 ![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/openocd.png)
 
 The reason we can use telnet is because when an OpenOCD session is established, it also starts two aditional services; Telenet on port 4444 and GDBServer on port 3333 (GDBServer maybe for another article). The first thing we need to do is halt the CPU. 
@@ -198,8 +208,11 @@ The reason we can use telnet is because when an OpenOCD session is established, 
 ![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/dumpFirmware.png)
 
 the dumped file will be stored in /tmp folder
+
 ![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/examinFirmware.png)
 
+Happy Learning <br>
+Mahmoud Jadaan
 
 ## Test Environment
 ### Hardware
