@@ -1,15 +1,6 @@
 # CAN frames Spoofing
 * * *
 
-## Test Environment
-### Hardware
-- CANPico boards
-- Logic Analyzer (Saleae Logic)
-
-### Software
-- Kali Linux (6.5.0-kali3-amd64)
-- Thonny
-- PulseView
 
 ## Introduction
 Controller Area Network (CAN) is a communication protocol developed by Robert Bosch and standardized as ISO 11898-1 and ISO 11898-2. It is utilized in various industries, including automotive, railway, industrial automation, and many more. Despite its widespread usage and advantages, it raises certain security concerns. For instance, CAN frames are broadcasted to all nodes on the network. This means that a malicious component can passively sniff on all communications or actively send packets to any other node on the network.
@@ -221,4 +212,14 @@ This is the essence of a basic CAN message spoofing attack and it occurs because
 
 Happy Learning... <br>
 Mahmoud Jadaan
+
+## Test Environment
+### Hardware
+- CANPico boards
+- Logic Analyzer (Saleae Logic)
+
+### Software
+- Kali Linux (6.5.0-kali3-amd64)
+- Thonny
+- PulseView
 
