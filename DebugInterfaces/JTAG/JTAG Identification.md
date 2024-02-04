@@ -1,4 +1,4 @@
-# JTAG Identification
+# JTAG Pinout Identification
 * * *
 
 ## Introduction
