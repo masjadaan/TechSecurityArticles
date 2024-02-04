@@ -90,7 +90,7 @@ Repeat this process for all pins and make a note of your findings. The two image
 
 
 ### JTAGulator
-So, have ever heard of Jtagulator? It's a great an open-source hardware tool that can be used to automatically identify the pinout of the JTAG interface (and a bunch of other interfaces too). Jtagulator supports a target voltage from 1.2V to 3.3V and has 24 programmable I/O pins that you can connect to potential JTAG pins. Then, it will run some automatic scanning logic to identify the JTAG pinout for you.
+So, have you ever heard of Jtagulator? It's a great an open-source hardware tool that can be used to automatically identify the pinout of the JTAG interface (and a bunch of other interfaces too). Jtagulator supports a target voltage from 1.2V to 3.3V and has 24 programmable I/O pins that you can connect to potential JTAG pins. Then, it will run some automatic scanning logic to identify the JTAG pinout for you.
 
 Jtagulator is connected to a PC using a USB interface and it is powered by this interface and controlled through a serial terminal emulator like Putty, picocom, etc. you can grab Jtagulator from various sources, including Adafruit.
 
@@ -120,14 +120,14 @@ ls /dev/ttyUSB*
 
 We will use picocom as a terminal emulator to talk to the Jtagulator. On my Kali Linux system, the serial device is "/dev/ttyUSB0," and the baud rate is 115200 bits/sec. 
 
-Once connected, we press enter to be greeted by the Jtagulator, then type H for help to print the available commands. We can see there are two types of commands: Target Interface to choose what interface to examine and General Commands to set the target system voltage.
-
-Our first step is setting the target voltage. Just press 'V' and type '3.3' for our case, as that's the voltage we're working with.
-
 ```sh
 sudo apt install picocom
 picocom /dev/ttyUSB0 -b 115200
 ```
+Once connected, we press enter to be greeted by the Jtagulator, then type H for help to print the available commands. We can see there are two types of commands: Target Interface to choose what interface to examine and General Commands to set the target system voltage.
+
+Our first step is setting the target voltage. Just press 'V' and type '3.3' for our case, as that's the voltage we're working with.
+
 
 ![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/picocom.png)
 
@@ -203,11 +203,11 @@ sudo openocd -f jtag_adapter.cfg -f /usr/share/openocd/scripts/target/esp32.cfg
 
 ![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/openocd.png)
 
-The reason we can use telnet is because when an OpenOCD session is established, it also starts two additional services; Telenet on port 4444 and GDBServer on port 3333 (GDBServer maybe for another article). The first thing we need to do is halt the CPU. 
+The reason we can use telnet is because when an OpenOCD session is established, it also starts two aditional services; Telenet on port 4444 and GDBServer on port 3333 (GDBServer maybe for another article). The first thing we need to do is halt the CPU, then wer are ready to dump the memory content. For this exercise, I chose the Internal ROM memoery which has 64KB. This information is available in "Table 12. Embedded Memory Address Mapping" in the [ESP32 Technical Reference Manual](https://www.espressif.com/sites/default/files/documentation/esp32_technical_reference_manual_en.pdf): 
 
 ![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/dumpFirmware.png)
 
-The dumped file will be stored in /tmp folder
+The dumped file will be stored in /tmp folder and we can examine it usign xxd command
 
 ![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/examinFirmware.png)
 
