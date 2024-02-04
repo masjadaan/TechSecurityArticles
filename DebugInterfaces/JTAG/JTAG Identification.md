@@ -166,7 +166,7 @@ sudo apt install openocd
 If you decide to use separate JTAG adapter, look for one that is compatible with both the voltage levels on the ESP32 as well as with the OpenOCD software. 
 Now we know the JTAG interface pins, we need a serial based JTAG adapter board to attach a PC to the JTAG interface. Connect the pins on JTAG adapter board to the JTAG pins on ESP32 as follow:
 
-|Bus Pirate Pins| ESP32 JTAG Pins|
+|JTAG Adapter Pins| ESP32 JTAG Pins|
 | --  | -- |
 |GDN  | GND |
 |MISO |IO15 (MTDO) |
@@ -198,7 +198,7 @@ ll /usr/share/openocd/scripts/target | grep -i esp32
 As you can see in the image below on top we launched the openocd with the two configuration files, at the bottom, we connect to the openocd session using telnet on port 4444
 
 ```sh
-sudo openocd -f /usr/share/openocd/scripts/interface/buspirate.cfg -f /usr/share/openocd/scripts/target/esp32.cfg
+sudo openocd -f jtag_adapter.cfg -f /usr/share/openocd/scripts/target/esp32.cfg
 ```
 
 ![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/DebugInterfaces/JTAG/Images/openocd.png)
