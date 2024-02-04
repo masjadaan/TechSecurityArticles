@@ -156,7 +156,7 @@ We know now all JTAG interface pins, let's summarize that in this table:
 
 ## Dump Firmware
 ### OpenOCD
-OpenOCD supports a fair amount of JTAG adapters. See https://openocd.org/doc/html/Debug-Adapter-Hardware.html for a list of the adapters OpenOCD works with. If you don't have it on your machine you can install it using this command.
+OpenOCD supports a fair amount of JTAG adapters. See [here](https://openocd.org/doc/html/Debug-Adapter-Hardware.html) for a list of the adapters OpenOCD works with. If you don't have it on your machine you can install it using this command.
 
 ```
 sudo apt install openocd
