@@ -1,7 +1,6 @@
 # CBC Bit-Flipping Attack
 * * *
 
-[toc]
 
 ## Introduction
 Hey everyone, in the previous article, we discussed the Oracle Padding Attack against Block Cipher algorithms, particularly when operating under Cipher Block Chaining (CBC) mode. In this article, we will delve into the CBC Bit-Flipping Attack. It's important to understand that exploiting vulnerabilities in cryptographic implementations could lead to outcomes like content decryption, privilege escalation, or even key recovery. Let's start with a brief introduction to Block Ciphers.
@@ -52,7 +51,7 @@ However, there is a little twist in the process for the first block. For the fir
 ```
 (IV) ^ (Plaintext data block 1)
 ```
-![c86a39ba1865f429936411ec53c94422.png](:/0d2eb52351cf46f4b91ad5bee1cb3257)
+![]()
 
 #### Decryption
 Let's talk about decryption now. The ciphertext of the previous block is XORed with the output of the decrypting algorithm of the next block. In simpler terms:
