@@ -177,7 +177,7 @@ git clone https://github.com/masjadaan/TechSecurityArticles.git
 cd TechSecurityArticles/Cryptography/CBCBitFlipAttack/application
 ./app.py 
 
-# in a broswer navigate to 
+# in a browser navigate to
 http://127.0.0.1:5000/
 ```
 
