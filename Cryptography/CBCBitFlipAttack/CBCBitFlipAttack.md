@@ -173,8 +173,8 @@ To begin, clone the GitHub repository to obtain the code. Next, navigate to the 
 To follow the steps outlined in this article, open app.py in any text editor, preferably PyCharm. Locate the bit_flipping function. Each time you modify the values of position or xor_value, simply refresh the web application page to observe the changes.
 
 ```sh
-git clone
-cd 
+git clone https://github.com/masjadaan/TechSecurityArticles.git
+cd TechSecurityArticles/Cryptography/CBCBitFlipAttack/application
 ./app.py 
 
 # in a broswer navigate to 
