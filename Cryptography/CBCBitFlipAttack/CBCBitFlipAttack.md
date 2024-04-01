@@ -51,7 +51,7 @@ However, there is a little twist in the process for the first block. For the fir
 ```
 (IV) ^ (Plaintext data block 1)
 ```
-![]()
+![alt text]()
 
 #### Decryption
 Let's talk about decryption now. The ciphertext of the previous block is XORed with the output of the decrypting algorithm of the next block. In simpler terms:
@@ -62,7 +62,7 @@ But again, there's a special case for the first block. The Initialization Vector
 ```
 (IV) ^ (Decrypting Algorithm output block 1)
 ```
-![96bdea4cd7cda217483adc59189fbcc4.png](:/0cb11f5373ff4348a1c6461c1f09a32e)
+![alt text]()
 
 
 ## CBC Bit-Flipping Attack
@@ -76,7 +76,7 @@ As you launch the app, you'll see the original values: Original Text, Original I
 ```
 ./app.py
 ```
-![78189622b3cd10e48febc973debc5570.png](:/bd2c80fa5a174e128519535783222701)
+![alt text]()
 
 Now, here's where it gets interesting. The "Original Text" contains a userid encrypted by the app using AES-CBC. Imagine this userid plays a crucial role in the application, perhaps for user ID checks before granting access or escalating privileges. The attack strategy is to modify the encrypted text so that the userid is changed to 0, assuming it's an admin userid.
 
@@ -111,7 +111,7 @@ Since I don't know which byte in the Initialization Vector needs changing, I ran
 ```python
 data = bit_flipping(ciphertext=data, position=7, xor_value=7)
 ```
-![8e45e0ed600d2c86573bef038f83534a.png](:/fcc59719146a48b4b7b5bc345684c0dc)
+![alt text]()
 After refreshing the web page, we observe the result: the word "userid" transforms into "usbrid" (you'll also notice the modification in the IV).
 
 Clearly, I've picked the wrong position, so let's keep increasing it until we overwrite the "9" in "userid." Voila! It happens at position 13, and the userid "9" is decrypted to ">."
@@ -119,13 +119,13 @@ Clearly, I've picked the wrong position, so let's keep increasing it until we ov
 ```python
 data = bit_flipping(ciphertext=data, position=13, xor_value=7)
 ```
-![2f281fcf7d25dae2a249bb16c9c19909.png](:/c4c6de3b1c5b443bb1389e025a606d6b)
+![alt text]()
 
 We've determined the position changes, and now we need to fine-tune the xor_value parameter in the bit_flipping() function until we get zero. Actually, this occurs when the xor_value is equal to 9, as depicted in the image below. Once the web application decrypts the ciphertext, the userid value magically transforms into 0.
 ```python
 data = bit_flipping(ciphertext=data, position=13, xor_value=9)
 ```
-![8557354d6888b55527bcf41c68f7428e.png](:/06086bffc5204c5bbbf69ca6060cbd6c)
+![alt text]()
 
 ## Let's do some Math
 Now, let's break down the magic. Remember how we mentioned earlier that during decryption, the output of the Decrypt Algorithm is XORed with the IV? Well, the first time we messed with the user id, we manipulated the IV at position 13 with a value of 7. At position 13, we find the value 4, and its ASCII value is 0x34. We XORed it with 0x7 and got 0x33, which, in ASCII, is the number 3. That's why we got 3 in the modified IV:
