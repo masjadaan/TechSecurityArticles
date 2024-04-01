@@ -11,7 +11,7 @@ In block ciphers encryption, data is encrypted one block at a time, with the blo
 Consider an example with a block size of 8 bytes and a ciphertext data length of 64 bytes. The question arises: What is the length range of the plaintext data (without padding)?
 
 - First, let's calculate the number of blocks:
-```math
+```
 Nr. Blocks = 64 bytes ciphertext / 8 bytes per block = 8 blocks
 ```
 We have 8 blocks, which implies two scenarios. The first scenario occurs when the plaintext data is a multiple of 8 and occupies the entire 8 blocks, representing the maximum length of the plaintext.
