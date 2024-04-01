@@ -12,11 +12,11 @@ Consider an example with a block size of 8 bytes and a ciphertext data length of
 
 - First, let's calculate the number of blocks:
 ```
-Nr. Blocks = 64 bytes ciphertext / 8 bytes per block = 8 blocks
+Nr. Blocks = (64 bytes ciphertext) / (8 bytes per block) = 8 blocks
 ```
 We have 8 blocks, which implies two scenarios. The first scenario occurs when the plaintext data is a multiple of 8 and occupies the entire 8 blocks, representing the maximum length of the plaintext.
  ```
-Plaintext length = 8 blocks * 8 bytes per block = 64 bytes
+Plaintext length = (8 blocks) * (8 bytes per block) = 64 bytes
  ```
 
  In the second scenario, the plaintext data is not a multiple of 8, filling the entire 7 blocks with only one byte of the 8th block, while the rest consists of padding data. This scenario represents the minimum length.
