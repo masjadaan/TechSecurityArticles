@@ -64,7 +64,7 @@ But again, there's a special case for the first block. The Initialization Vector
 (IV) ^ (Decrypting Algorithm output block 1)
 ```
 
-![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/Cryptography/CBCBitFlipAttack/images/encryptoin.png)
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/Cryptography/CBCBitFlipAttack/images/decryption.png)
 
 
 ## CBC Bit-Flipping Attack
