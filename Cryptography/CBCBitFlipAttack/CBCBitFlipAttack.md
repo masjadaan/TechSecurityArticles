@@ -182,5 +182,5 @@ http://127.0.0.1:5000/
 ```
 
 
-Happy Learning
+Happy Learning <br>
 Mahmoud Jadaan
