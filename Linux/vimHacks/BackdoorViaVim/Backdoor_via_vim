@@ -12,9 +12,9 @@ To grasp the potential, let's experiment within the VIM environment. Execute the
 :!echo $USER
 ```
 
-![]()
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/Linux/vimHacks/BackdoorViaVim/images/UID.png)
 
-![]()
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/Linux/vimHacks/BackdoorViaVim/images/1000.png)
 
 Moreover, we can inject desired commands into the .vimrc file, ensuring their execution in the background whenever the current user initiates Vim. One particularly intriguing command is the source command, enabling the loading and execution of a shell script.
 
@@ -41,7 +41,7 @@ nc -lnvp 7777
 ```
 
 On the victim machine, launching Vim to read any file triggers the execution of the backdoor script. Remarkably, the attacker machine promptly establishes a connection with the victim, without arousing suspicion. The file intended for reading opens seamlessly, with no discernible signs of tampering.
-![]()
+![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/Linux/vimHacks/BackdoorViaVim/images/reverseShell.png)
 
 However, it's crucial to understand that the reverse shell obtained doesn't necessarily grant extensive access beyond that of the current user.
 
