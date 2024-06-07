@@ -12,9 +12,9 @@ To grasp the potential, let's experiment within the VIM environment. Execute the
 :!echo $USER
 ```
 
-![321887b74676d3ea793b76927135b14c.png](:/46f3e6f1f2b846c6a5fec725b9764217)
+![]()
 
-![a25d620ce73cae8147a4a748b75a58f6.png](:/d0cacd985d0441cfaea66ceb621e3743)
+![]()
 
 Moreover, we can inject desired commands into the .vimrc file, ensuring their execution in the background whenever the current user initiates Vim. One particularly intriguing command is the source command, enabling the loading and execution of a shell script.
 
@@ -41,7 +41,7 @@ nc -lnvp 7777
 ```
 
 On the victim machine, launching Vim to read any file triggers the execution of the backdoor script. Remarkably, the attacker machine promptly establishes a connection with the victim, without arousing suspicion. The file intended for reading opens seamlessly, with no discernible signs of tampering.
-![22dc040fdcf24c0ef0cfd801826d84ec.png](:/e46b0d4abd1c40d7a9d88470e00b025e)
+![]()
 
 However, it's crucial to understand that the reverse shell obtained doesn't necessarily grant extensive access beyond that of the current user.
 
