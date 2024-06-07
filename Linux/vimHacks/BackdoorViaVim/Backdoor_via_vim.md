@@ -59,3 +59,14 @@ This configuration allows the root user to execute /usr/bin/vim on /opt/whatever
 In conclusion, we have seen how an attacker can exploit a legitimate program to achieve malicious goals.
 
 Happy Learning...
+
+
+### Test Environment
+
+- Victim
+  - Ubuntu (16.04.7 LTS (Xenial Xerus), x86_64 GNU/Linux)
+  - netcat-traditional/xenial,now 1.10-41 amd64
+  - VIM - Vi IMproved 7.4
+ 
+- Attacker
+  - Kali GNU/Linux Rolling 6.6.15-2
