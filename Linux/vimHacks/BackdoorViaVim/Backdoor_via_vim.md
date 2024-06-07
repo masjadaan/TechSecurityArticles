@@ -6,6 +6,7 @@ The VIM editor needs no introduction; it is a well-known and widely used command
 This interesting setup presents an opportunity for attackers. By manipulating the `.vimrc` file, one can execute unintended actions during a user's VIM session without the user's knowledge or permission, especially if VIM operates within an unrestricted environment.
 
 To get a feel for that, let's experiment. To execute a command within the VIM environment, you need to precede any shell command with a colon and an exclamation mark. Execute the following command within VIM to get the user ID (or username):
+
 ```sh
 :!echo $UID
 # OR
@@ -44,8 +45,6 @@ Okay, let's give it a shot. Start a netcat listener on the attacker machine on p
 ```sh
 nc -lnvp 7777
 ```
-
-On the victim machine, when launching Vim to read any file, it will trigger the execution of the backdoor script. You can see on the attacker machine that a netcat connection has been established with the victim, and the victim did not receive any suspicious messages.
 
 ![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/Linux/vimHacks/BackdoorViaVim/images/reverseShell.png)
 
