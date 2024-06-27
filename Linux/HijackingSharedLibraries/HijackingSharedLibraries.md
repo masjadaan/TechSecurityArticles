@@ -160,7 +160,7 @@ On the attacker's terminal, you should see the reverse shell connection. This in
 ![alt text](https://github.com/masjadaan/TechSecurityArticles/blob/main/Linux/HijackingSharedLibraries/images/rootShell.png)
 
 
-Happy Learning... <\n>
+Happy Learning... <br>
 Mahmoud Jadaan
 
 ### Test Environment
