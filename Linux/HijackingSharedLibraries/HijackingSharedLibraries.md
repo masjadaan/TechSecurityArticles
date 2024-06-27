@@ -54,10 +54,10 @@ To compile our shared library, we use the following commands:
 gcc -Wall -fPIC -c mylibrary.c -o mylibrary.o
 ```
 
-`-Wall`: Enables all compiler's warning messages.
-`-fPIC`: Generates position-independent code, suitable for shared libraries.
-`-c`: Compiles the code without linking.
-`-o`: Specifies the output file name.
+- `-Wall`: Enables all compiler's warning messages.
+- `-fPIC`: Generates position-independent code, suitable for shared libraries.
+- `-c`: Compiles the code without linking.
+- `-o`: Specifies the output file name.
 
 ### Create the Shared Library
 
