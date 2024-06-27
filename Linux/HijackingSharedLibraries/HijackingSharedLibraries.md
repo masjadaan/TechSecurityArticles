@@ -1,4 +1,4 @@
-# Hijcaking Shared Libraries
+# Hijacking Shared Libraries
 * * *
 ## Intoduction To Linux Shared Libraries
 
