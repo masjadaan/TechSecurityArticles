@@ -15,7 +15,7 @@ When a Linux application is executed, it follows a specific sequence to locate i
 - Finally, the search proceeds to the standard system library directories, which include `/lib`, `/lib64`, `/usr/lib`, `/usr/lib64`.
 
 
-## Hijcak Shared Library: A Practical Guide
+## Exploiting The Search Path Approach
 
 Looking at how Linux searches for shared libraries reveals a potential security risk: an attacker can manipulate this process by placing malicious versions of libraries in earlier locations, thus controlling the application's behavior. This technique, known as library hijacking, exploits the order in which Linux searches for shared libraries.
 
@@ -59,9 +59,9 @@ gcc -Wall -fPIC -c mylibrary.c -o mylibrary.o
 - `-c`: Compiles the code without linking.
 - `-o`: Specifies the output file name.
 
-### Create the Shared Library
+### Creating the Shared Library
 
-After compliation is done, we need to create the shared library. This is done by using the `-shared` parameter to tell `gcc` we’re creating a shared library from our object file. We then specify an output file again, this time with the name `libhax.so`
+After compilation is done, we need to create the shared library. This is done by using the `-shared` parameter to tell `gcc` we’re creating a shared library from our object file. We then specify an output file again, this time with the name `libhax.so`
 
 ```sh
 gcc -shared mylibrary.o -o libmylibrary.so
