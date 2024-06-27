@@ -61,7 +61,7 @@ gcc -Wall -fPIC -c mylibrary.c -o mylibrary.o
 
 ### Creating the Shared Library
 
-After compilation is done, we need to create the shared library. This is done by using the `-shared` parameter to tell `gcc` we’re creating a shared library from our object file. We then specify an output file again, this time with the name `libhax.so`
+After compilation is done, we need to create the shared library. This is done by using the `-shared` parameter to tell `gcc` we’re creating a shared library from our object file. We then specify an output file again, this time with the name `libmylibrary.so`
 
 ```sh
 gcc -shared mylibrary.o -o libmylibrary.so
@@ -72,7 +72,7 @@ gcc -shared mylibrary.o -o libmylibrary.so
 
 After creating our malicious shared library, the next step is to use it. Two considerations arise: firstly, selecting a program that the victim is likely to execute with elevated privileges, and secondly, ensuring that the hijacking of a shared library does not cause the program to crash. Remember, when we hijack a library, it will not be available to that program.
 
-For this demonstartion we will use the `ps` command as our target. Users often run ps with sudo to display processes with elevated permissions, making it a suitable candidate for our attack.
+For this demonstration we will use the `ps` command as our target. Users often run ps with sudo to display processes with elevated permissions, making it a suitable candidate for our attack.
 
 Let's identify the libraries `ps` uses. We'll use the `ldd` command on the target machine to list these libraries. The output will include something like:
 
