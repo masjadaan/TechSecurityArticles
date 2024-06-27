@@ -1,6 +1,6 @@
 # Hijacking Shared Libraries
 * * *
-## Intoduction To Linux Shared Libraries
+## Introduction To Linux Shared Libraries
 
 You can think of shared libraries as a collection of functions and data designed to be used by multiple programs. They are typically identified by the `.so` (shared object) extension and are linked dynamically at runtime, which not only reduces the size of executables but also boosts system efficiency. However, it's important to note that any changes to a shared library can impact all the programs that rely on it.
 In the Linux ecosystem, shared libraries commonly use the Executable and Linkable Format (ELF), a standard file format for executables, object code, shared libraries, etc.
